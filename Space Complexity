@@ -1,0 +1,232 @@
+# Space Complexity
+
+## Definition
+
+**Space Complexity** measures the amount of **additional memory (RAM)** required by an algorithm as the input size (`n`) increases.
+
+It focuses on the **extra memory** used while solving a problem, not the memory used to store the input.
+
+---
+
+# Why Do We Need Space Complexity?
+
+Space Complexity helps us:
+
+* Compare memory usage of different algorithms.
+* Design memory-efficient programs.
+* Optimize applications that run on devices with limited memory.
+* Balance execution speed and memory usage.
+
+---
+
+# Components of Space Complexity
+
+Space Complexity consists of:
+
+1. **Input Space**
+
+   * Memory required to store the input.
+   * Usually **not considered** when analyzing auxiliary space.
+
+2. **Auxiliary Space**
+
+   * Extra memory used by the algorithm.
+   * Includes variables, arrays, recursion stack, and temporary storage.
+
+---
+
+# Common Space Complexities
+
+## 1. O(1) – Constant Space
+
+The algorithm uses a fixed amount of extra memory regardless of the input size.
+
+### Example
+
+```python
+numbers = [10, 20, 30, 40, 50]
+
+total = 0
+
+for num in numbers:
+    total += num
+
+print(total)
+```
+
+**Extra Memory Used**
+
+* `total`
+* `num`
+
+No additional memory grows with the input size.
+
+---
+
+## 2. O(n) – Linear Space
+
+The extra memory grows proportionally with the input size.
+
+### Example
+
+```python
+numbers = [10, 20, 30, 40, 50]
+
+square = []
+
+for num in numbers:
+    square.append(num * num)
+
+print(square)
+```
+
+If:
+
+* 5 elements → New list of 5 elements
+* 100 elements → New list of 100 elements
+* 1000 elements → New list of 1000 elements
+
+---
+
+## 3. O(log n) – Logarithmic Space
+
+Memory grows slowly as the input size increases.
+
+### Example
+
+Binary Search (Recursive)
+
+Each recursive call uses stack memory, but only for about **log n** levels.
+
+---
+
+## 4. O(n) – Recursive Stack Space
+
+Some recursive algorithms create one function call for every input element.
+
+### Example
+
+```python
+def print_numbers(n):
+    if n == 0:
+        return
+    print_numbers(n - 1)
+```
+
+The recursion stack grows with `n`.
+
+---
+
+# Time Complexity vs Space Complexity
+
+| Time Complexity               | Space Complexity                 |
+| ----------------------------- | -------------------------------- |
+| Measures execution efficiency | Measures additional memory usage |
+| Counts operations             | Counts extra memory used         |
+| Goal: Faster algorithms       | Goal: Lower memory usage         |
+
+---
+
+# Time-Space Trade-off
+
+Sometimes we use **more memory** to make an algorithm **faster**.
+
+### Example
+
+Without Dictionary
+
+* Searching → **O(n)**
+* Extra Space → **O(1)**
+
+Using Dictionary (Hash Map)
+
+* Searching → **O(1)** (average case)
+* Extra Space → **O(n)**
+
+This trade-off is common in efficient algorithm design.
+
+---
+
+# Rules for Calculating Space Complexity
+
+### Rule 1: Fixed Variables
+
+```python
+a = 10
+b = 20
+```
+
+Space Complexity = **O(1)**
+
+---
+
+### Rule 2: New Array/List
+
+```python
+arr = [0] * n
+```
+
+Space Complexity = **O(n)**
+
+---
+
+### Rule 3: Recursion
+
+```python
+def fun(n):
+    if n == 0:
+        return
+    fun(n - 1)
+```
+
+Space Complexity = **O(n)**
+
+Because each recursive call occupies stack memory.
+
+---
+
+### Rule 4: Ignore Constants
+
+Using 5 or 10 extra variables still results in:
+
+**Space Complexity = O(1)**
+
+---
+
+# Why Space Complexity Matters
+
+* Helps reduce unnecessary memory usage.
+* Important in large-scale applications.
+* Improves overall program efficiency.
+* Essential in embedded systems and memory-constrained environments.
+
+---
+
+# Interview Tips
+
+* Always mention both **Time Complexity** and **Space Complexity** while explaining your solution.
+* Sometimes interviewers prefer a faster algorithm even if it uses more memory.
+* If possible, optimize both execution time and memory usage.
+
+---
+
+# Quick Revision
+
+| Situation               | Space Complexity |
+| ----------------------- | ---------------- |
+| Fixed Variables         | O(1)             |
+| New List/Array          | O(n)             |
+| Recursive Binary Search | O(log n)         |
+| Linear Recursion        | O(n)             |
+| Hash Map                | O(n)             |
+
+---
+
+# Key Takeaways
+
+* Space Complexity measures additional memory usage.
+* Auxiliary Space is the extra memory used by an algorithm.
+* O(1) means constant memory usage.
+* O(n) means memory grows with input size.
+* Recursion also consumes memory through the call stack.
+* Efficient algorithms aim to balance both **Time Complexity** and **Space Complexity**.
