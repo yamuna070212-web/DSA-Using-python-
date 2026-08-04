@@ -1,0 +1,269 @@
+# Time Complexity (Big O Notation)
+
+## Definition
+
+**Time Complexity** measures how the number of operations performed by an algorithm grows as the input size (`n`) increases.
+
+It does **not** measure the actual execution time in seconds.
+
+---
+
+# Why Do We Need Time Complexity?
+
+Different computers have different hardware configurations, so the execution time of the same program may vary.
+
+Time Complexity provides a standard way to compare the efficiency of algorithms regardless of the computer being used.
+
+---
+
+# Big O Notation
+
+Big O Notation is used to represent the **worst-case time complexity** of an algorithm.
+
+It describes how the running time grows as the input size increases.
+
+---
+
+# Common Time Complexities
+
+## 1. O(1) – Constant Time
+
+The execution time remains the same regardless of the input size.
+
+### Example
+
+```python
+arr = [10, 20, 30, 40, 50]
+print(arr[2])
+```
+
+**Operations**
+
+* 5 elements → 1 operation
+* 100 elements → 1 operation
+* 1000 elements → 1 operation
+
+---
+
+## 2. O(log n) – Logarithmic Time
+
+The input size is reduced by half in each step.
+
+### Example
+
+* Binary Search
+
+**Operations**
+
+* 16 elements → 4 steps
+* 32 elements → 5 steps
+* 1024 elements → 10 steps
+
+---
+
+## 3. O(n) – Linear Time
+
+The algorithm processes every element exactly once.
+
+### Example
+
+```python
+arr = [10, 20, 30, 40, 50]
+
+for num in arr:
+    print(num)
+```
+
+**Operations**
+
+* 10 elements → 10 operations
+* 100 elements → 100 operations
+* 1000 elements → 1000 operations
+
+---
+
+## 4. O(n log n) – Linearithmic Time
+
+Usually seen in efficient sorting algorithms.
+
+### Examples
+
+* Merge Sort
+* Heap Sort
+* Average-case Quick Sort
+
+---
+
+## 5. O(n²) – Quadratic Time
+
+Usually occurs when nested loops iterate over the same input.
+
+### Example
+
+```python
+arr = [1, 2, 3]
+
+for i in arr:
+    for j in arr:
+        print(i, j)
+```
+
+**Operations**
+
+* 10 elements → 100 operations
+* 100 elements → 10,000 operations
+* 1000 elements → 1,000,000 operations
+
+---
+
+## 6. O(n³) – Cubic Time
+
+Occurs when three nested loops are used.
+
+### Example
+
+```python
+for i in range(n):
+    for j in range(n):
+        for k in range(n):
+            print(i, j, k)
+```
+
+---
+
+## 7. O(2ⁿ) – Exponential Time
+
+Each recursive call generates two or more additional calls.
+
+### Example
+
+* Recursive Fibonacci
+
+---
+
+## 8. O(n!) – Factorial Time
+
+The slowest commonly encountered time complexity.
+
+### Examples
+
+* Generating all permutations
+* Traveling Salesman Problem (Brute Force)
+
+---
+
+# Time Complexity Order (Best to Worst)
+
+| Complexity | Performance    |
+| ---------- | -------------- |
+| O(1)       | Excellent      |
+| O(log n)   | Very Fast      |
+| O(n)       | Good           |
+| O(n log n) | Efficient      |
+| O(n²)      | Slow           |
+| O(n³)      | Very Slow      |
+| O(2ⁿ)      | Extremely Slow |
+| O(n!)      | Worst          |
+
+---
+
+# Rules for Calculating Time Complexity
+
+### Rule 1: Ignore Constants
+
+```python
+for i in range(n):
+    print(i)
+```
+
+Time Complexity = **O(n)**
+
+Not **O(2n)** or **O(5n)**.
+
+---
+
+### Rule 2: Nested Loops Multiply
+
+```python
+for i in range(n):
+    for j in range(n):
+        print(i, j)
+```
+
+Time Complexity = **O(n²)**
+
+---
+
+### Rule 3: Consecutive Loops Add
+
+```python
+for i in range(n):
+    print(i)
+
+for j in range(n):
+    print(j)
+```
+
+Time Complexity =
+
+O(n) + O(n)
+
+= **O(n)**
+
+---
+
+### Rule 4: Keep the Highest Order Term
+
+Example
+
+```
+O(n² + n + 100)
+```
+
+Final Time Complexity
+
+```
+O(n²)
+```
+
+---
+
+# Why Big O Matters
+
+* Compares algorithms fairly.
+* Helps choose efficient solutions.
+* Predicts performance for large inputs.
+* Essential for coding interviews.
+* Used in software engineering and competitive programming.
+
+---
+
+# Interview Tips
+
+* Always analyze the time complexity of your solution.
+* Try to improve an O(n²) solution to O(n log n) or O(n) whenever possible.
+* Binary Search is one of the most common O(log n) algorithms asked in interviews.
+
+---
+
+# Quick Revision
+
+| Operation           | Time Complexity |
+| ------------------- | --------------- |
+| Access by Index     | O(1)            |
+| Traverse Array      | O(n)            |
+| Nested Loops        | O(n²)           |
+| Binary Search       | O(log n)        |
+| Merge Sort          | O(n log n)      |
+| Recursive Fibonacci | O(2ⁿ)           |
+| Permutations        | O(n!)           |
+
+---
+
+# Key Takeaways
+
+* Time Complexity measures algorithm efficiency.
+* Big O Notation represents the worst-case growth of an algorithm.
+* Lower time complexity generally means better performance.
+* O(1), O(log n), O(n), and O(n log n) are considered efficient for most applications.
+* Understanding Time Complexity is essential before learning advanced Data Structures and Algorithms.
