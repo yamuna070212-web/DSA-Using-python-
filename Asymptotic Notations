@@ -1,0 +1,149 @@
+# Asymptotic Notations
+
+## Definition
+
+**Asymptotic Notations** are mathematical notations used to describe the performance of an algorithm as the input size (`n`) increases.
+
+They help compare algorithms based on their growth rate rather than the actual execution time.
+
+---
+
+# Why Do We Need Asymptotic Notations?
+
+* To analyze the efficiency of algorithms.
+* To compare different algorithms.
+* To understand how an algorithm performs for large input sizes.
+* To select the most efficient algorithm for a problem.
+
+---
+
+# Types of Asymptotic Notations
+
+There are three main types:
+
+1. Big O Notation (O)
+2. Omega Notation (Ω)
+3. Theta Notation (Θ)
+
+---
+
+# Big O Notation - O()
+
+## Definition
+
+Big O represents the **worst-case** performance of an algorithm.
+
+It describes the maximum amount of time an algorithm may take.
+
+### Example
+
+```python
+arr = [10, 20, 30, 40, 50]
+
+target = 50
+
+for num in arr:
+    if num == target:
+        print("Found")
+        break
+```
+
+**Time Complexity:** `O(n)`
+
+---
+
+# Omega Notation - Ω()
+
+## Definition
+
+Omega represents the **best-case** performance of an algorithm.
+
+It describes the minimum amount of time an algorithm may take.
+
+### Example
+
+```python
+arr = [10, 20, 30, 40, 50]
+
+target = 10
+
+for num in arr:
+    if num == target:
+        print("Found")
+        break
+```
+
+**Time Complexity:** `Ω(1)`
+
+---
+
+# Theta Notation - Θ()
+
+## Definition
+
+Theta represents the **average-case** or **tight bound** of an algorithm.
+
+It describes the typical performance of an algorithm.
+
+### Example
+
+```python
+arr = [10, 20, 30, 40, 50]
+
+target = 30
+
+for num in arr:
+    if num == target:
+        print("Found")
+        break
+```
+
+**Time Complexity:** `Θ(n)`
+
+---
+
+# Comparison Table
+
+| Notation | Meaning | Represents            |
+| -------- | ------- | --------------------- |
+| O()      | Big O   | Worst Case            |
+| Ω()      | Omega   | Best Case             |
+| Θ()      | Theta   | Average (Tight Bound) |
+
+---
+
+# Real-Life Example
+
+Searching for a book on a shelf:
+
+* **First book found** → `Ω(1)`
+* **Book in the middle** → `Θ(n)`
+* **Last book found** → `O(n)`
+
+---
+
+# Advantages of Asymptotic Notations
+
+* Hardware independent.
+* Easy to compare algorithms.
+* Predicts algorithm performance for large inputs.
+* Helps in selecting efficient algorithms.
+
+---
+
+# Key Differences
+
+| Feature    | Big O      | Omega     | Theta                 |
+| ---------- | ---------- | --------- | --------------------- |
+| Represents | Worst Case | Best Case | Average (Tight Bound) |
+| Symbol     | O          | Ω         | Θ                     |
+
+---
+
+# Key Takeaways
+
+* Asymptotic Notations describe algorithm performance as the input size grows.
+* Big O represents the worst-case complexity.
+* Omega represents the best-case complexity.
+* Theta represents the average-case (tight-bound) complexity.
+* These notations are used to compare the efficiency of algorithms.
