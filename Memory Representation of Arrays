@@ -1,0 +1,215 @@
+# Memory Representation of Arrays
+
+## Introduction
+
+An array stores its elements in **contiguous (continuous) memory locations**.
+
+This means all the elements are placed one after another in memory without any gaps.
+
+Because of this, arrays provide **fast access** to any element using its index.
+
+---
+
+# Contiguous Memory Allocation
+
+Contiguous memory means that every element is stored in consecutive memory locations.
+
+### Example
+
+```text
+Array: [10, 20, 30, 40, 50]
+
+Index :      0      1      2      3      4
+
+Memory :   1000   1004   1008   1012   1016
+```
+
+Here,
+
+* `10` is stored at memory address `1000`
+* `20` is stored at memory address `1004`
+* `30` is stored at memory address `1008`
+* `40` is stored at memory address `1012`
+* `50` is stored at memory address `1016`
+
+Each integer occupies **4 bytes** in this example.
+
+---
+
+# Why is Contiguous Memory Important?
+
+Since elements are stored next to each other, the computer can directly calculate the memory address of any element.
+
+This allows **constant-time access (O(1))**.
+
+---
+
+# Indexing
+
+Every element in an array has a unique index.
+
+In Python, indexing starts from **0**.
+
+Example:
+
+```python
+numbers = [10, 20, 30, 40, 50]
+
+print(numbers[0])
+print(numbers[2])
+print(numbers[4])
+```
+
+**Output**
+
+```text
+10
+30
+50
+```
+
+---
+
+# Address Calculation
+
+The address of an element can be calculated using the formula:
+
+```text
+Address = Base Address + (Index × Size of Each Element)
+```
+
+Where:
+
+* **Base Address** = Address of the first element
+* **Index** = Position of the element
+* **Size of Each Element** = Memory occupied by one element
+
+---
+
+## Example
+
+Suppose:
+
+* Base Address = **1000**
+* Size of each integer = **4 bytes**
+
+Find the address of the element at index **3**.
+
+```text
+Address = 1000 + (3 × 4)
+
+Address = 1000 + 12
+
+Address = 1012
+```
+
+Therefore, the element at index **3** is stored at memory address **1012**.
+
+---
+
+# One-Dimensional (1D) Array
+
+A One-Dimensional Array stores elements in a single row.
+
+Example:
+
+```python
+marks = [85, 90, 78, 92, 88]
+```
+
+Representation:
+
+```text
+Index :   0    1    2    3    4
+
+Value :  85   90   78   92   88
+```
+
+---
+
+# Two-Dimensional (2D) Array
+
+A Two-Dimensional Array stores data in rows and columns.
+
+In Python, it is represented using a list of lists.
+
+Example:
+
+```python
+matrix = [
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9]
+]
+```
+
+Representation:
+
+```text
+        Column
+          0   1   2
+
+Row 0     1   2   3
+
+Row 1     4   5   6
+
+Row 2     7   8   9
+```
+
+Accessing an element:
+
+```python
+print(matrix[1][2])
+```
+
+**Output**
+
+```text
+6
+```
+
+Explanation:
+
+* `matrix[1]` → Second row → `[4, 5, 6]`
+* `matrix[1][2]` → Third element of the second row → `6`
+
+---
+
+# Difference Between 1D and 2D Arrays
+
+| 1D Array                    | 2D Array                        |
+| --------------------------- | ------------------------------- |
+| Stores data in a single row | Stores data in rows and columns |
+| Uses one index              | Uses two indexes                |
+| Example: `[10, 20, 30]`     | Example: `[[1,2],[3,4]]`        |
+
+---
+
+# Advantages of Contiguous Memory
+
+* Fast access using indexes.
+* Simple memory organization.
+* Efficient traversal.
+* Better cache performance.
+
+---
+
+# Limitations
+
+* In traditional arrays, the size is fixed.
+* Inserting elements in the middle requires shifting elements.
+* Deleting elements also requires shifting.
+
+> **Note:** Python lists are dynamic and can grow or shrink automatically, but the concept of contiguous storage is fundamental to understanding arrays in DSA.
+
+---
+
+# Key Takeaways
+
+* Arrays store elements in contiguous memory locations.
+* Indexing starts from **0**.
+* Elements can be accessed directly using their index.
+* Memory addresses are calculated using the base address, index, and element size.
+* A 1D array stores data in a single row.
+* A 2D array stores data in rows and columns.
+* Contiguous memory enables fast element access.
