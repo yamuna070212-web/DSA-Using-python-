@@ -1,0 +1,178 @@
+# Arrays
+
+## What is an Array?
+
+An **Array** is a linear data structure used to store multiple elements of the **same data type** in a sequential manner.
+
+Each element is stored at a specific position called an **index**.
+
+Arrays allow fast access to elements using their index.
+
+---
+
+# Python and Arrays
+
+Python does not have a built-in array data structure like C or Java.
+
+In Python, we commonly use **lists** because they provide array-like functionality.
+
+Example:
+
+```python
+numbers = [10, 20, 30, 40, 50]
+```
+
+Here,
+
+* `10` is stored at index `0`
+* `20` is stored at index `1`
+* `30` is stored at index `2`
+* `40` is stored at index `3`
+* `50` is stored at index `4`
+
+---
+
+# Representation of an Array
+
+```
+Index :   0    1    2    3    4
+
+Value :  10   20   30   40   50
+```
+
+To access an element:
+
+```python
+numbers = [10, 20, 30, 40, 50]
+
+print(numbers[2])
+```
+
+**Output**
+
+```
+30
+```
+
+---
+
+# Characteristics of Arrays
+
+* Elements are stored in sequential order.
+* Every element has a unique index.
+* Indexing starts from **0**.
+* Elements can be accessed directly using their index.
+* Arrays are linear data structures.
+
+---
+
+# Why Do We Use Arrays?
+
+Arrays help us store multiple related values using a single variable.
+
+Instead of writing:
+
+```python
+student1 = "Rahul"
+student2 = "Amit"
+student3 = "Anjali"
+student4 = "Kiran"
+student5 = "Priya"
+```
+
+We can write:
+
+```python
+students = ["Rahul", "Amit", "Anjali", "Kiran", "Priya"]
+```
+
+This makes the program shorter, cleaner, and easier to manage.
+
+---
+
+# Real-Life Examples
+
+### Student Marks
+
+```
+[85, 92, 78, 88, 95]
+```
+
+---
+
+### Monthly Sales
+
+```
+[12000, 15000, 18000, 16000, 20000]
+```
+
+---
+
+### Temperatures
+
+```
+[28, 30, 31, 29, 27]
+```
+
+---
+
+### Cricket Scores
+
+```
+[45, 80, 12, 56, 99]
+```
+
+---
+
+# Advantages of Arrays
+
+* Easy to store multiple values.
+* Fast access using indexes.
+* Simple to traverse.
+* Efficient memory usage for sequential data.
+* Useful for implementing many other data structures.
+
+---
+
+# Disadvantages of Arrays
+
+* In many programming languages, arrays have a fixed size.
+* Inserting or deleting elements in the middle can be expensive.
+* Searching in an unsorted array may require checking every element.
+
+> **Note:** Python lists are dynamic, so they can grow or shrink automatically. This is different from traditional arrays in languages like C.
+
+---
+
+# Applications of Arrays
+
+Arrays are used in:
+
+* Student record management
+* Banking systems
+* Inventory management
+* Gaming applications
+* Image processing
+* Machine Learning
+* Data Analysis
+
+---
+
+# Key Points
+
+* An Array stores multiple elements.
+* Elements are accessed using indexes.
+* Indexing starts from **0**.
+* Python uses **lists** to perform array operations.
+* Arrays provide fast access to data.
+
+---
+
+# Summary
+
+* Learned what an Array is.
+* Understood how arrays are represented.
+* Learned array indexing.
+* Understood the characteristics of arrays.
+* Learned the advantages and disadvantages of arrays.
+* Saw real-world applications of arrays.
