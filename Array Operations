@@ -1,0 +1,254 @@
+# Array Operations
+
+## Introduction
+
+Array operations are the basic actions that can be performed on an array. These operations help us access, modify, search, and manage the elements stored in an array.
+
+The fundamental array operations are:
+
+* Traversal
+* Accessing
+* Insertion
+* Deletion
+* Searching
+* Updating
+
+---
+
+# 1. Traversal
+
+## Definition
+
+**Traversal** is the process of visiting each element of an array exactly once.
+
+### Example
+
+```python
+numbers = [10, 20, 30, 40, 50]
+
+for num in numbers:
+    print(num)
+```
+
+**Output**
+
+```
+10
+20
+30
+40
+50
+```
+
+---
+
+# 2. Accessing
+
+## Definition
+
+**Accessing** means retrieving an element from the array using its index.
+
+### Example
+
+```python
+numbers = [10, 20, 30, 40, 50]
+
+print(numbers[2])
+```
+
+**Output**
+
+```
+30
+```
+
+The element at index `2` is `30`.
+
+---
+
+# 3. Insertion
+
+## Definition
+
+**Insertion** is the process of adding a new element to an array.
+
+### Insert at the End
+
+```python
+numbers = [10, 20, 30]
+
+numbers.append(40)
+
+print(numbers)
+```
+
+**Output**
+
+```
+[10, 20, 30, 40]
+```
+
+---
+
+### Insert at a Specific Position
+
+```python
+numbers = [10, 20, 40]
+
+numbers.insert(2, 30)
+
+print(numbers)
+```
+
+**Output**
+
+```
+[10, 20, 30, 40]
+```
+
+---
+
+# 4. Deletion
+
+## Definition
+
+**Deletion** is the process of removing an element from an array.
+
+### Delete by Value
+
+```python
+numbers = [10, 20, 30, 40]
+
+numbers.remove(20)
+
+print(numbers)
+```
+
+**Output**
+
+```
+[10, 30, 40]
+```
+
+---
+
+### Delete by Index
+
+```python
+numbers = [10, 20, 30, 40]
+
+numbers.pop(1)
+
+print(numbers)
+```
+
+**Output**
+
+```
+[10, 30, 40]
+```
+
+---
+
+# 5. Searching
+
+## Definition
+
+**Searching** is the process of finding whether a particular element exists in an array.
+
+### Example
+
+```python
+numbers = [10, 20, 30, 40, 50]
+
+target = 30
+
+if target in numbers:
+    print("Element Found")
+else:
+    print("Element Not Found")
+```
+
+**Output**
+
+```
+Element Found
+```
+
+---
+
+# 6. Updating
+
+## Definition
+
+**Updating** means replacing an existing element with a new value.
+
+### Example
+
+```python
+numbers = [10, 20, 30, 40]
+
+numbers[2] = 100
+
+print(numbers)
+```
+
+**Output**
+
+```
+[10, 20, 100, 40]
+```
+
+---
+
+# Summary of Array Operations
+
+| Operation | Description                         |
+| --------- | ----------------------------------- |
+| Traversal | Visit every element in the array    |
+| Accessing | Retrieve an element using its index |
+| Insertion | Add a new element                   |
+| Deletion  | Remove an existing element          |
+| Searching | Find an element in the array        |
+| Updating  | Modify an existing element          |
+
+---
+
+# Example Program
+
+```python
+numbers = [10, 20, 30]
+
+# Traversal
+for num in numbers:
+    print(num)
+
+# Accessing
+print(numbers[1])
+
+# Insertion
+numbers.append(40)
+
+# Updating
+numbers[0] = 5
+
+# Deletion
+numbers.remove(20)
+
+# Searching
+print(30 in numbers)
+
+print(numbers)
+```
+
+---
+
+# Key Takeaways
+
+* Traversal visits every element one by one.
+* Accessing retrieves elements using an index.
+* Insertion adds new elements.
+* Deletion removes existing elements.
+* Searching checks whether an element exists.
+* Updating changes the value of an existing element.
+* These operations form the foundation for solving array-based problems.
