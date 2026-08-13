@@ -1,0 +1,86 @@
+📋 Copy an Array
+Definition
+
+Copying an array means creating another array that contains the same elements as the original array.
+
+Example
+Original: [10, 20, 30, 40]
+Copy:     [10, 20, 30, 40]
+
+The copied array should be a separate array, so changes to one should not unexpectedly affect the other.
+
+Method 1: Using copy()
+arr = [10, 20, 30, 40]
+
+copied_arr = arr.copy()
+
+print(copied_arr)
+Output
+[10, 20, 30, 40]
+Method 2: Using Slicing
+arr = [10, 20, 30, 40]
+
+copied_arr = arr[:]
+
+print(copied_arr)
+Output
+[10, 20, 30, 40]
+Method 3: Using a Loop
+
+This method is useful for understanding the copying process.
+
+arr = [10, 20, 30, 40]
+
+copied_arr = []
+
+for item in arr:
+    copied_arr.append(item)
+
+print(copied_arr)
+Output
+[10, 20, 30, 40]
+Important Difference: Assignment vs Copy
+Assignment
+arr = [10, 20, 30]
+
+new_arr = arr
+
+new_arr[0] = 100
+
+print(arr)
+print(new_arr)
+Output
+[100, 20, 30]
+[100, 20, 30]
+
+Here, both variables refer to the same list.
+
+Actual Copy
+arr = [10, 20, 30]
+
+new_arr = arr.copy()
+
+new_arr[0] = 100
+
+print(arr)
+print(new_arr)
+Output
+[10, 20, 30]
+[100, 20, 30]
+
+Here, arr and new_arr are separate lists.
+
+Time and Space Complexity
+
+For copying an array with n elements:
+
+Operation	Time Complexity	Space Complexity
+Copy Array	O(n)	O(n)
+
+Every element needs to be copied into the new array.
+
+Key Takeaways
+Copying creates a new array with the same elements.
+new_arr = arr does not create an independent copy.
+copy() and slicing [:] create a separate list.
+Copying an array takes O(n) time and O(n) extra space.
