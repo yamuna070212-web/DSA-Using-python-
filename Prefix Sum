@@ -1,0 +1,235 @@
+Prefix Sum
+Definition
+
+A Prefix Sum is an array where each position stores the sum of all elements from the beginning of the original array up to that position.
+
+It helps us answer range sum queries efficiently.
+
+Example
+
+Original array:
+
+[2, 4, 1, 3, 5]
+
+Prefix sum array:
+
+[2, 6, 7, 10, 15]
+How?
+Prefix[0] = 2
+
+
+Prefix[1] = 2 + 4 = 6
+
+
+Prefix[2] = 2 + 4 + 1 = 7
+
+
+Prefix[3] = 2 + 4 + 1 + 3 = 10
+
+
+Prefix[4] = 2 + 4 + 1 + 3 + 5 = 15
+Why Do We Use Prefix Sum?
+
+Suppose we want to find the sum from index 1 to index 3.
+
+Array: [2, 4, 1, 3, 5]
+Index:   0  1  2  3  4
+
+
+Required: 4 + 1 + 3 = 8
+
+Without Prefix Sum, we add the elements every time.
+
+With Prefix Sum:
+
+prefix = [2, 6, 7, 10, 15]
+
+We can calculate:
+
+Sum from index L to R = prefix[R] - prefix[L - 1]
+
+So:
+
+Sum from index 1 to 3
+
+
+= prefix[3] - prefix[0]
+
+
+= 10 - 2
+
+
+= 8
+Building a Prefix Sum Array
+arr = [2, 4, 1, 3, 5]
+
+
+prefix = [0] * len(arr)
+
+
+prefix[0] = arr[0]
+
+
+for i in range(1, len(arr)):
+    prefix[i] = prefix[i - 1] + arr[i]
+
+
+print(prefix)
+Output
+[2, 6, 7, 10, 15]
+Prefix Sum Formula
+
+For each index:
+
+prefix[i] = prefix[i - 1] + arr[i]
+
+This means the current prefix sum is:
+
+Previous sum + Current element
+
+Finding a Range Sum
+def range_sum(prefix, left, right):
+    if left == 0:
+        return prefix[right]
+
+
+    return prefix[right] - prefix[left - 1]
+
+
+
+
+arr = [2, 4, 1, 3, 5]
+
+
+prefix = [2, 6, 7, 10, 15]
+
+
+print(range_sum(prefix, 1, 3))
+Output
+8
+Better Prefix Sum Method
+
+A common approach is to create a prefix array with an extra 0 at the beginning.
+
+arr    = [2, 4, 1, 3, 5]
+
+
+prefix = [0, 2, 6, 7, 10, 15]
+
+Now:
+
+prefix[i + 1] = prefix[i] + arr[i]
+Python Implementation
+arr = [2, 4, 1, 3, 5]
+
+
+prefix = [0]
+
+
+for num in arr:
+    prefix.append(prefix[-1] + num)
+
+
+print(prefix)
+Output
+[0, 2, 6, 7, 10, 15]
+
+Now the sum from index left to right is:
+
+prefix[right + 1] - prefix[left]
+Example
+
+Find the sum from index 1 to 3:
+
+prefix[4] - prefix[1]
+
+
+= 10 - 2
+
+
+= 8
+Complete Program
+def build_prefix_sum(arr):
+    prefix = [0]
+
+
+    for num in arr:
+        prefix.append(prefix[-1] + num)
+
+
+    return prefix
+
+
+
+
+def range_sum(prefix, left, right):
+    return prefix[right + 1] - prefix[left]
+
+
+
+
+arr = [2, 4, 1, 3, 5]
+
+
+prefix = build_prefix_sum(arr)
+
+
+print("Prefix Sum:", prefix)
+
+
+print("Sum from index 1 to 3:", range_sum(prefix, 1, 3))
+Output
+Prefix Sum: [0, 2, 6, 7, 10, 15]
+Sum from index 1 to 3: 8
+Time Complexity
+Building the Prefix Sum
+
+Every element is processed once.
+
+Time: O(n)
+Space: O(n)
+Finding a Range Sum
+
+After the prefix array is built:
+
+Time: O(1)
+Space: O(1)
+
+This is why Prefix Sum is useful when there are multiple range sum queries.
+
+Comparison
+Operation	Normal Approach	Prefix Sum
+Build structure	—	O(n)
+One range sum query	O(n)	O(1)
+Multiple range queries	O(n) each	O(1) each
+Example
+arr = [5, 2, 7, 3, 6]
+
+
+prefix = [0, 5, 7, 14, 17, 23]
+
+Find the sum from index 2 to 4:
+
+arr[2] + arr[3] + arr[4]
+
+
+= 7 + 3 + 6
+
+
+= 16
+
+Using Prefix Sum:
+
+prefix[5] - prefix[2]
+
+
+= 23 - 7
+
+
+= 16
+Key Takeaways
+Prefix Sum stores cumulative sums.
+It is useful for range sum problems.
+Building the prefix array takes O(n) time.
+After building it, each range sum query takes O(1) time.
+Using an extra 0 at the beginning makes range calculations simpler.
