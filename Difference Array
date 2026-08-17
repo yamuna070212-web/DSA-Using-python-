@@ -1,0 +1,253 @@
+Difference Array
+Definition
+
+A Difference Array is a technique used to efficiently perform multiple range updates on an array.
+
+Instead of updating every element in a range one by one, we mark only the starting and ending points of the update.
+
+Why Do We Use a Difference Array?
+
+Suppose:
+
+arr = [10, 20, 30, 40, 50]
+
+We want to add 5 to all elements from index 1 to 3.
+
+Normal approach
+Index:   0   1   2   3   4
+Array:  10  20  30  40  50
+             +5  +5  +5
+
+Result:
+
+[10, 25, 35, 45, 50]
+
+Updating every element takes O(n) in the worst case.
+
+With a Difference Array, the range update can be marked in O(1) time.
+
+How a Difference Array Works
+
+For an array:
+
+arr = [10, 20, 30, 40, 50]
+
+The difference array is:
+
+diff[0] = arr[0]
+
+
+diff[i] = arr[i] - arr[i - 1]
+
+Let's calculate:
+
+diff[0] = 10
+
+
+diff[1] = 20 - 10 = 10
+
+
+diff[2] = 30 - 20 = 10
+
+
+diff[3] = 40 - 30 = 10
+
+
+diff[4] = 50 - 40 = 10
+
+Therefore:
+
+diff = [10, 10, 10, 10, 10]
+Range Update
+
+Suppose we want to add 5 from index 1 to index 3.
+
+arr = [10, 20, 30, 40, 50]
+
+
+Update: +5 from index 1 to 3
+
+We update only two positions:
+
+diff[left] += value
+
+
+diff[right + 1] -= value
+
+So:
+
+diff[1] += 5
+diff[4] -= 5
+
+The difference array becomes:
+
+Original:
+[10, 10, 10, 10, 10]
+
+
+After update:
+[10, 15, 10, 10, 5]
+
+Now rebuild the original array using prefix sums:
+
+10
+10 + 15 = 25
+25 + 10 = 35
+35 + 10 = 45
+45 + 5 = 50
+
+Result:
+
+[10, 25, 35, 45, 50]
+Important Formula
+
+To add a value to all elements from index left to right:
+
+diff[left] += value
+
+
+if right + 1 < n:
+    diff[right + 1] -= value
+
+Then rebuild the final array using:
+
+arr[i] = arr[i - 1] + diff[i]
+Python Implementation
+def range_update(arr, left, right, value):
+    n = len(arr)
+
+
+    diff = [0] * n
+
+
+    diff[0] = arr[0]
+
+
+    for i in range(1, n):
+        diff[i] = arr[i] - arr[i - 1]
+
+
+    diff[left] += value
+
+
+    if right + 1 < n:
+        diff[right + 1] -= value
+
+
+    result = [0] * n
+    result[0] = diff[0]
+
+
+    for i in range(1, n):
+        result[i] = result[i - 1] + diff[i]
+
+
+    return result
+
+
+
+
+arr = [10, 20, 30, 40, 50]
+
+
+result = range_update(arr, 1, 3, 5)
+
+
+print(result)
+Output
+[10, 25, 35, 45, 50]
+Better Approach for Multiple Updates
+
+Difference Arrays are especially useful when there are many updates.
+
+Suppose:
+
+arr = [0, 0, 0, 0, 0]
+
+Updates:
+
+Add 5 from index 1 to 3
+Add 2 from index 2 to 4
+
+Start with:
+
+diff = [0, 0, 0, 0, 0]
+First update: Add 5 from index 1 to 3
+diff[1] += 5
+diff[4] -= 5
+diff = [0, 5, 0, 0, -5]
+Second update: Add 2 from index 2 to 4
+diff[2] += 2
+
+Since index 4 is the last index, there is no need to subtract inside the array.
+
+diff = [0, 5, 2, 0, -5]
+
+Now calculate the prefix sum:
+
+[0, 5, 7, 7, 2]
+
+Final array:
+
+[0, 5, 7, 7, 2]
+Python Implementation for Multiple Updates
+def range_updates(n, updates):
+    diff = [0] * n
+
+
+    for left, right, value in updates:
+        diff[left] += value
+
+
+        if right + 1 < n:
+            diff[right + 1] -= value
+
+
+    for i in range(1, n):
+        diff[i] += diff[i - 1]
+
+
+    return diff
+
+
+
+
+n = 5
+
+
+updates = [
+    (1, 3, 5),
+    (2, 4, 2)
+]
+
+
+print(range_updates(n, updates))
+Output
+[0, 5, 7, 7, 2]
+Difference Array vs Prefix Sum
+Prefix Sum	Difference Array
+Used for range sum queries	Used for range updates
+Build cumulative sums	Store changes between elements
+Range query can be O(1)	Range update can be O(1)
+Useful for many queries	Useful for many updates
+Time Complexity
+
+Assume:
+
+n = number of elements
+q = number of range updates
+Operation	Time Complexity
+Create difference array	O(n)
+One range update	O(1)
+q updates	O(q)
+Rebuild final array	O(n)
+Total	O(n + q)
+Space Complexity
+O(n)
+Key Takeaways
+A Difference Array stores changes between consecutive elements.
+It is useful for performing multiple range updates efficiently.
+A range update only modifies two positions.
+Each update takes O(1) time.
+Prefix sums are used to rebuild the final array.
+For q updates, the total time can be O(n + q).
