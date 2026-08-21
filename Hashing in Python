@@ -1,0 +1,238 @@
+Hashing in Python
+
+Hashing is an important DSA technique used to store and find data efficiently.
+
+In Python, the main hashing data structures are:
+
+Dictionary (dict) → stores key : value pairs
+Set (set) → stores unique values
+
+Hashing is useful for problems involving:
+
+Frequency counting
+Finding duplicates
+Checking whether an element exists
+Pair sum problems
+Storing and retrieving data quickly
+1. Dictionary
+
+A dictionary stores data as key-value pairs.
+
+Example
+student = {
+    "name": "Yamuna",
+    "age": 20
+}
+
+
+print(student["name"])
+
+Output:
+
+Yamuna
+Dictionary for Frequency Counting
+
+Suppose:
+
+arr = [1, 2, 1, 3, 2, 1]
+
+We want to count how many times each number appears.
+
+arr = [1, 2, 1, 3, 2, 1]
+
+
+frequency = {}
+
+
+for num in arr:
+    if num in frequency:
+        frequency[num] += 1
+    else:
+        frequency[num] = 1
+
+
+print(frequency)
+
+Output:
+
+{1: 3, 2: 2, 3: 1}
+How it works
+Number → Count
+
+
+1 → 3
+2 → 2
+3 → 1
+Shorter Frequency Counting
+
+We can also use .get().
+
+arr = [1, 2, 1, 3, 2, 1]
+
+
+frequency = {}
+
+
+for num in arr:
+    frequency[num] = frequency.get(num, 0) + 1
+
+
+print(frequency)
+
+Here:
+
+frequency.get(num, 0)
+
+means:
+
+Get the value of num. If it doesn't exist, use 0.
+
+2. Set
+
+A set stores only unique values.
+
+Example
+arr = [1, 2, 2, 3, 3, 4]
+
+
+unique_numbers = set(arr)
+
+
+print(unique_numbers)
+
+Output:
+
+{1, 2, 3, 4}
+
+Duplicates are automatically removed.
+
+Finding Duplicates Using a Set
+arr = [1, 2, 3, 2, 4, 1]
+
+
+seen = set()
+
+
+for num in arr:
+    if num in seen:
+        print("Duplicate:", num)
+    else:
+        seen.add(num)
+
+Output:
+
+Duplicate: 2
+Duplicate: 1
+Check if an Element Exists
+Using a List
+arr = [10, 20, 30, 40, 50]
+
+
+print(30 in arr)
+
+This can take:
+
+O(n)
+Using a Set
+numbers = {10, 20, 30, 40, 50}
+
+
+print(30 in numbers)
+
+Average lookup time:
+
+O(1)
+
+This is one major advantage of hashing.
+
+Example: Two Sum
+
+Given:
+
+arr = [2, 7, 11, 15]
+target = 9
+
+We need to find two numbers whose sum equals 9.
+
+def two_sum(arr, target):
+    seen = {}
+
+
+    for i, num in enumerate(arr):
+        needed = target - num
+
+
+        if needed in seen:
+            return [seen[needed], i]
+
+
+        seen[num] = i
+
+
+    return []
+
+
+
+
+arr = [2, 7, 11, 15]
+
+
+print(two_sum(arr, 9))
+
+Output:
+
+[0, 1]
+
+Because:
+
+arr[0] + arr[1]
+2 + 7 = 9
+How Two Sum Works
+
+For each number:
+
+num = 2
+target = 9
+
+
+needed = 9 - 2 = 7
+
+Check whether 7 was already seen.
+
+Then store:
+
+2 → index 0
+
+Next:
+
+num = 7
+
+
+needed = 9 - 7 = 2
+
+2 is already in the dictionary.
+
+So we found the answer.
+
+Time Complexity
+Operation	Dictionary	Set
+Insert	Average O(1)	Average O(1)
+Search	Average O(1)	Average O(1)
+Delete	Average O(1)	Average O(1)
+Important Note
+
+These are average-case complexities. Hash collisions can make worst-case performance worse.
+
+Dictionary vs Set
+Dictionary	Set
+Stores key-value pairs	Stores unique values
+Example: {"a": 1}	Example: {1, 2, 3}
+Useful for frequency counting	Useful for duplicate checking
+Can store extra information	Only stores unique values
+Key Takeaways
+Hashing helps store and search data efficiently.
+Python dict is used for key-value pairs.
+Python set is used for unique elements.
+Frequency counting commonly uses a dictionary.
+Duplicate detection commonly uses a set.
+Dictionary and set operations are usually O(1) on average.
