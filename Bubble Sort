@@ -1,0 +1,135 @@
+Bubble Sort
+
+Bubble Sort is a simple sorting algorithm that repeatedly compares adjacent elements and swaps them if they are in the wrong order.
+
+Example
+[5, 3, 8, 4, 2]
+
+We want to sort in ascending order:
+
+[2, 3, 4, 5, 8]
+How Bubble Sort Works
+
+Compare two neighboring elements.
+
+Step 1
+
+Compare 5 and 3:
+
+[5, 3, 8, 4, 2]
+
+Since 5 > 3, swap them:
+
+[3, 5, 8, 4, 2]
+Step 2
+
+Compare 5 and 8.
+
+Since they are already in the correct order:
+
+[3, 5, 8, 4, 2]
+
+No swap.
+
+Step 3
+
+Compare 8 and 4.
+
+[3, 5, 8, 4, 2]
+
+Swap:
+
+[3, 5, 4, 8, 2]
+Step 4
+
+Compare 8 and 2.
+
+Swap:
+
+[3, 5, 4, 2, 8]
+
+After the first pass, the largest element 8 has moved to the end.
+
+Python Code
+def bubble_sort(arr):
+    n = len(arr)
+
+    for i in range(n):
+        for j in range(0, n - i - 1):
+
+            if arr[j] > arr[j + 1]:
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+
+    return arr
+
+
+arr = [5, 3, 8, 4, 2]
+
+print(bubble_sort(arr))
+Output
+[2, 3, 4, 5, 8]
+Understanding the Loops
+for i in range(n):
+
+This controls the number of passes.
+
+for j in range(0, n - i - 1):
+
+This compares adjacent elements.
+
+The -i is used because after every pass, the largest unsorted element reaches its correct position at the end.
+
+Dry Run
+
+For:
+
+[5, 3, 8, 4, 2]
+Pass	Array
+Start	[5, 3, 8, 4, 2]
+Pass 1	[3, 5, 4, 2, 8]
+Pass 2	[3, 4, 2, 5, 8]
+Pass 3	[3, 2, 4, 5, 8]
+Pass 4	[2, 3, 4, 5, 8]
+Optimized Bubble Sort
+
+If the array is already sorted, we can stop early.
+
+def bubble_sort(arr):
+    n = len(arr)
+
+    for i in range(n):
+        swapped = False
+
+        for j in range(n - i - 1):
+            if arr[j] > arr[j + 1]:
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+                swapped = True
+
+        if not swapped:
+            break
+
+    return arr
+Why use swapped?
+
+If no elements are swapped during a pass:
+
+swapped = False
+
+It means the array is already sorted, so we stop.
+
+Time Complexity
+Case	Time Complexity
+Best Case (optimized)	O(n)
+Average Case	O(n²)
+Worst Case	O(n²)
+Space Complexity
+O(1)
+
+Bubble Sort sorts the array in-place, so it does not need another array.
+
+Key Takeaways
+Bubble Sort compares adjacent elements.
+If the left element is greater, they are swapped.
+After each pass, the largest unsorted element moves to the end.
+It is easy to understand but inefficient for large datasets.
+Optimized Bubble Sort can stop early if the array is already sorted.
