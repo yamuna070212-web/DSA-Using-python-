@@ -1,0 +1,145 @@
+Selection Sort
+
+Selection Sort is a sorting algorithm that repeatedly finds the smallest element from the unsorted part of the array and places it in the correct position.
+
+Example
+[5, 3, 8, 4, 2]
+
+Sorted:
+
+[2, 3, 4, 5, 8]
+How Selection Sort Works
+Step 1: Find the smallest element
+[5, 3, 8, 4, 2]
+             ↑
+        smallest = 2
+
+Swap 2 with the first element:
+
+[2, 3, 8, 4, 5]
+
+Now 2 is in its correct position.
+
+Step 2: Find the smallest from the remaining array
+
+Remaining part:
+
+[3, 8, 4, 5]
+
+Smallest is 3, and it's already in the correct position.
+
+[2, 3, 8, 4, 5]
+Step 3
+
+Remaining:
+
+[8, 4, 5]
+
+Smallest is 4.
+
+Swap 4 and 8:
+
+[2, 3, 4, 8, 5]
+Step 4
+
+Remaining:
+
+[8, 5]
+
+Smallest is 5.
+
+Swap:
+
+[2, 3, 4, 5, 8]
+
+Sorted! ✅
+
+Python Code
+def selection_sort(arr):
+    n = len(arr)
+
+    for i in range(n):
+        min_index = i
+
+        for j in range(i + 1, n):
+            if arr[j] < arr[min_index]:
+                min_index = j
+
+        arr[i], arr[min_index] = arr[min_index], arr[i]
+
+    return arr
+
+
+arr = [5, 3, 8, 4, 2]
+
+print(selection_sort(arr))
+Output
+[2, 3, 4, 5, 8]
+Understanding the Code
+Outer Loop
+for i in range(n):
+
+This represents the position where we want to place the next smallest element.
+
+Start with:
+min_index = i
+
+We assume the current element is the smallest.
+
+Inner Loop
+for j in range(i + 1, n):
+
+We search the remaining unsorted elements.
+
+If we find a smaller element:
+
+if arr[j] < arr[min_index]:
+    min_index = j
+
+We update min_index.
+
+Finally:
+
+arr[i], arr[min_index] = arr[min_index], arr[i]
+
+We place the smallest element in its correct position.
+
+Dry Run
+
+For:
+
+[5, 3, 8, 4, 2]
+Pass	Smallest Found	Array
+Start	—	[5, 3, 8, 4, 2]
+1	2	[2, 3, 8, 4, 5]
+2	3	[2, 3, 8, 4, 5]
+3	4	[2, 3, 4, 8, 5]
+4	5	[2, 3, 4, 5, 8]
+Time Complexity
+Case	Time Complexity
+Best Case	O(n²)
+Average Case	O(n²)
+Worst Case	O(n²)
+
+Even if the array is already sorted, Selection Sort still checks all remaining elements.
+
+Space Complexity
+O(1)
+
+It sorts the array in-place.
+
+Selection Sort vs Bubble Sort
+Feature	Bubble Sort	Selection Sort
+Main idea	Swap adjacent elements	Find minimum element
+Swaps	More swaps	Fewer swaps
+Best Case	O(n) optimized	O(n²)
+Average	O(n²)	O(n²)
+Worst	O(n²)	O(n²)
+Space	O(1)	O(1)
+Key Takeaways
+Selection Sort finds the smallest element in the unsorted part.
+It places that element at the beginning.
+The sorted portion grows from left to right.
+It performs fewer swaps than Bubble Sort.
+Time complexity is O(n²).
+Space complexity is O(1).
