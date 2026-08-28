@@ -1,0 +1,379 @@
+Quick Sort
+
+Quick Sort is an efficient sorting algorithm that uses the Divide and Conquer technique.
+
+The main idea is:
+
+Choose a pivot.
+Put smaller elements on the left of the pivot.
+Put larger elements on the right of the pivot.
+Repeat the process for the left and right parts.
+Example
+[6, 3, 8, 5, 2, 7, 4, 1]
+
+Choose the last element as the pivot:
+
+pivot = 1
+
+After partitioning:
+
+[] + [1] + [6, 3, 8, 5, 2, 7, 4]
+
+Then we recursively sort the remaining parts.
+
+The final result:
+
+[1, 2, 3, 4, 5, 6, 7, 8]
+Simple Python Implementation
+def quick_sort(arr):
+    if len(arr) <= 1:
+        return arr
+
+    pivot = arr[-1]
+
+    left = []
+    right = []
+
+    for num in arr[:-1]:
+        if num < pivot:
+            left.append(num)
+        else:
+            right.append(num)
+
+    return quick_sort(left) + [pivot] + quick_sort(right)
+
+
+arr = [6, 3, 8, 5, 2, 7, 4, 1]
+
+print(quick_sort(arr))
+Output
+[1, 2, 3, 4, 5, 6, 7, 8]
+Step-by-Step Explanation
+
+Consider:
+
+arr = [5, 3, 8, 4, 2]
+
+Choose:
+
+pivot = 2
+
+Check each remaining element:
+
+5 > 2 → right
+3 > 2 → right
+8 > 2 → right
+4 > 2 → right
+
+So:
+
+left = []
+
+pivot = [2]
+
+right = [5, 3, 8, 4]
+
+Now Quick Sort recursively sorts the right array.
+
+Another Example
+arr = [4, 2, 7, 3, 1]
+
+Choose:
+
+pivot = 1
+
+Partition:
+
+left = []
+
+right = [4, 2, 7, 3]
+
+Then sort:
+
+[4, 2, 7, 3]
+
+Choose pivot:
+
+pivot = 3
+
+Partition:
+
+left = [2]
+
+right = [4, 7]
+
+Continue recursively until all arrays have one element.
+
+Important Concept: Pivot
+
+The pivot is the element used to divide the array.
+
+Common pivot choices:
+
+First element
+Last element
+Middle element
+Random element
+
+The choice of pivot affects performance.
+
+Quick Sort with List Comprehension
+
+A shorter Python version:
+
+def quick_sort(arr):
+    if len(arr) <= 1:
+        return arr
+
+    pivot = arr[-1]
+
+    left = [x for x in arr[:-1] if x < pivot]
+    right = [x for x in arr[:-1] if x >= pivot]
+
+    return quick_sort(left) + [pivot] + quick_sort(right)
+
+
+arr = [5, 3, 8, 4, 2]
+
+print(quick_sort(arr))
+Time Complexity
+Case	Time Complexity
+Best Case	O(n log n)
+Average Case	O(n log n)
+Worst Case	O(n²)
+Best Case
+
+The pivot divides the array into nearly equal halves.
+
+8 elements
+   ↓
+4 + 4
+   ↓
+2 + 2 + 2 + 2
+Worst Case
+
+The pivot is always the smallest or largest element.
+
+Example:
+
+[1, 2, 3, 4, 5]
+
+If we always choose the last element:
+
+[1, 2, 3, 4] + [5]
+
+The divisions become unbalanced.
+
+Space Complexity
+
+For the simple implementation using left and right arrays:
+
+O(n)
+
+The exact recursive stack usage depends on how balanced the partitions are.
+
+Quick Sort vs Merge Sort
+Feature	Quick Sort	Merge Sort
+Technique	Divide and Conquer	Divide and Conquer
+Best	O(n log n)	O(n log n)
+Average	O(n log n)	O(n log n)
+Worst	O(n²)	O(n log n)
+Extra Space	Depends on implementation	O(n)
+Pivot	Required	Not required
+Key Takeaways
+Quick Sort uses Divide and Conquer.
+It selects a pivot.
+Smaller elements go to the left.
+Larger elements go to the right.
+The process repeats recursively.
+Average time complexity is O(n log n).
+Worst-case time complexity is O(n²).Quick Sort
+
+Quick Sort is an efficient sorting algorithm that uses the Divide and Conquer technique.
+
+The main idea is:
+
+Choose a pivot.
+Put smaller elements on the left of the pivot.
+Put larger elements on the right of the pivot.
+Repeat the process for the left and right parts.
+Example
+[6, 3, 8, 5, 2, 7, 4, 1]
+
+Choose the last element as the pivot:
+
+pivot = 1
+
+After partitioning:
+
+[] + [1] + [6, 3, 8, 5, 2, 7, 4]
+
+Then we recursively sort the remaining parts.
+
+The final result:
+
+[1, 2, 3, 4, 5, 6, 7, 8]
+Simple Python Implementation
+def quick_sort(arr):
+    if len(arr) <= 1:
+        return arr
+
+    pivot = arr[-1]
+
+    left = []
+    right = []
+
+    for num in arr[:-1]:
+        if num < pivot:
+            left.append(num)
+        else:
+            right.append(num)
+
+    return quick_sort(left) + [pivot] + quick_sort(right)
+
+
+arr = [6, 3, 8, 5, 2, 7, 4, 1]
+
+print(quick_sort(arr))
+Output
+[1, 2, 3, 4, 5, 6, 7, 8]
+Step-by-Step Explanation
+
+Consider:
+
+arr = [5, 3, 8, 4, 2]
+
+Choose:
+
+pivot = 2
+
+Check each remaining element:
+
+5 > 2 → right
+3 > 2 → right
+8 > 2 → right
+4 > 2 → right
+
+So:
+
+left = []
+
+pivot = [2]
+
+right = [5, 3, 8, 4]
+
+Now Quick Sort recursively sorts the right array.
+
+Another Example
+arr = [4, 2, 7, 3, 1]
+
+Choose:
+
+pivot = 1
+
+Partition:
+
+left = []
+
+right = [4, 2, 7, 3]
+
+Then sort:
+
+[4, 2, 7, 3]
+
+Choose pivot:
+
+pivot = 3
+
+Partition:
+
+left = [2]
+
+right = [4, 7]
+
+Continue recursively until all arrays have one element.
+
+Important Concept: Pivot
+
+The pivot is the element used to divide the array.
+
+Common pivot choices:
+
+First element
+Last element
+Middle element
+Random element
+
+The choice of pivot affects performance.
+
+Quick Sort with List Comprehension
+
+A shorter Python version:
+
+def quick_sort(arr):
+    if len(arr) <= 1:
+        return arr
+
+    pivot = arr[-1]
+
+    left = [x for x in arr[:-1] if x < pivot]
+    right = [x for x in arr[:-1] if x >= pivot]
+
+    return quick_sort(left) + [pivot] + quick_sort(right)
+
+
+arr = [5, 3, 8, 4, 2]
+
+print(quick_sort(arr))
+Time Complexity
+Case	Time Complexity
+Best Case	O(n log n)
+Average Case	O(n log n)
+Worst Case	O(n²)
+Best Case
+
+The pivot divides the array into nearly equal halves.
+
+8 elements
+   ↓
+4 + 4
+   ↓
+2 + 2 + 2 + 2
+Worst Case
+
+The pivot is always the smallest or largest element.
+
+Example:
+
+[1, 2, 3, 4, 5]
+
+If we always choose the last element:
+
+[1, 2, 3, 4] + [5]
+
+The divisions become unbalanced.
+
+Space Complexity
+
+For the simple implementation using left and right arrays:
+
+O(n)
+
+The exact recursive stack usage depends on how balanced the partitions are.
+
+Quick Sort vs Merge Sort
+Feature	Quick Sort	Merge Sort
+Technique	Divide and Conquer	Divide and Conquer
+Best	O(n log n)	O(n log n)
+Average	O(n log n)	O(n log n)
+Worst	O(n²)	O(n log n)
+Extra Space	Depends on implementation	O(n)
+Pivot	Required	Not required
+Key Takeaways
+Quick Sort uses Divide and Conquer.
+It selects a pivot.
+Smaller elements go to the left.
+Larger elements go to the right.
+The process repeats recursively.
+Average time complexity is O(n log n).
+Worst-case time complexity is O(n²).
