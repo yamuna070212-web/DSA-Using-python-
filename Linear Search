@@ -1,0 +1,160 @@
+Linear Search
+
+Linear Search is the simplest searching algorithm.
+
+It checks each element one by one until the target element is found.
+
+Example
+arr = [10, 25, 7, 40, 15]
+target = 40
+
+Linear Search checks:
+
+10 ❌
+25 ❌
+7  ❌
+40 ✅ Found!
+
+The target is found at index:
+
+3
+Python Code
+def linear_search(arr, target):
+    for i in range(len(arr)):
+        if arr[i] == target:
+            return i
+
+    return -1
+
+
+arr = [10, 25, 7, 40, 15]
+target = 40
+
+result = linear_search(arr, target)
+
+print(result)
+Output
+3
+Understanding the Code
+for i in range(len(arr)):
+
+This loop goes through every index.
+
+For:
+
+arr = [10, 25, 7, 40, 15]
+
+Indexes are:
+
+Index:  0   1  2   3   4
+Value: 10  25  7  40  15
+
+Then:
+
+if arr[i] == target:
+
+We compare the current element with the target.
+
+If found:
+
+return i
+
+We return its index.
+
+If the loop finishes without finding the target:
+
+return -1
+
+-1 means element not found.
+
+Another Simple Version
+
+Python allows us to loop directly through values:
+
+def linear_search(arr, target):
+    for i, value in enumerate(arr):
+        if value == target:
+            return i
+
+    return -1
+
+enumerate() gives both:
+
+index + value
+
+Example:
+
+i = 0, value = 10
+i = 1, value = 25
+i = 2, value = 7
+Linear Search with a Boolean Result
+
+Sometimes we only need to know whether the element exists.
+
+def element_exists(arr, target):
+    for num in arr:
+        if num == target:
+            return True
+
+    return False
+
+
+arr = [10, 20, 30, 40]
+
+print(element_exists(arr, 30))
+Output
+True
+Time Complexity
+Case	Time Complexity
+Best Case	O(1)
+Average Case	O(n)
+Worst Case	O(n)
+Best Case
+
+The target is the first element.
+
+[10, 20, 30, 40]
+ ↑
+Target = 10
+
+Only one comparison.
+
+Worst Case
+
+The target is the last element or doesn't exist.
+
+[10, 20, 30, 40]
+              ↑
+Target = 40
+
+We may check all elements.
+
+Space Complexity
+O(1)
+
+We only use a few variables.
+
+When to Use Linear Search
+
+Linear Search is useful when:
+
+The array is small.
+The array is unsorted.
+Simplicity is important.
+You only need to search occasionally.
+Linear Search vs Binary Search
+
+| Feature | Linear Search | Binary Search |
+|---|---|
+| Array needs sorting? | No | Yes |
+| Best Case | O(1) | O(1) |
+| Worst Case | O(n) | O(log n) |
+| Easy to implement | Yes | Slightly harder |
+
+Key Takeaways
+Linear Search checks elements one by one.
+It works on both sorted and unsorted arrays.
+It returns the position of the target.
+-1 usually means the target was not found.
+Worst-case time complexity is O(n).
+Space complexity is O(1).
