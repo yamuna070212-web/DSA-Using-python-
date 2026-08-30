@@ -1,0 +1,221 @@
+Binary Search
+
+Binary Search is a fast searching algorithm used to find an element in a sorted array.
+
+Instead of checking every element one by one, it repeatedly divides the search area into half.
+
+Example
+arr = [2, 5, 8, 12, 16, 23, 38, 56]
+target = 23
+
+Binary Search starts by checking the middle element.
+
+[2, 5, 8, 12, 16, 23, 38, 56]
+            ↑
+          middle
+
+Middle element:
+
+12
+
+Since:
+
+23 > 12
+
+The target must be on the right side.
+
+Now ignore the left half.
+
+How Binary Search Works
+
+We use three variables:
+
+left
+right
+mid
+
+Initially:
+
+left = 0
+right = len(arr) - 1
+
+Calculate middle:
+
+mid = (left + right) // 2
+
+Then compare:
+
+If target is found
+arr[mid] == target
+
+Return the index.
+
+If target is greater
+target > arr[mid]
+
+Search the right half:
+
+left = mid + 1
+If target is smaller
+target < arr[mid]
+
+Search the left half:
+
+right = mid - 1
+Step-by-Step Example
+arr = [2, 5, 8, 12, 16, 23, 38, 56]
+target = 23
+Step 1
+left = 0
+right = 7
+
+mid = (0 + 7) // 2
+mid = 3
+arr[3] = 12
+
+Since:
+
+23 > 12
+
+Move left:
+
+left = 4
+Step 2
+left = 4
+right = 7
+
+mid = (4 + 7) // 2
+mid = 5
+arr[5] = 23
+
+Target found! ✅
+
+Index:
+
+5
+Python Code
+def binary_search(arr, target):
+    left = 0
+    right = len(arr) - 1
+
+    while left <= right:
+        mid = (left + right) // 2
+
+        if arr[mid] == target:
+            return mid
+
+        elif arr[mid] < target:
+            left = mid + 1
+
+        else:
+            right = mid - 1
+
+    return -1
+
+
+arr = [2, 5, 8, 12, 16, 23, 38, 56]
+target = 23
+
+print(binary_search(arr, target))
+Output
+5
+Visual Representation
+[2, 5, 8, 12, 16, 23, 38, 56]
+
+Step 1:
+L          M              R
+↓          ↓              ↓
+2  5  8  12  16  23  38  56
+
+Target > 12 → Search Right
+
+Step 2:
+             L      M       R
+             ↓      ↓       ↓
+2  5  8  12  16  23  38  56
+
+Found!
+Why Binary Search Is Fast
+
+Linear Search checks one by one:
+
+1 → 2 → 3 → 4 → 5 → 6 → ...
+
+Binary Search removes half of the elements every step:
+
+100 elements
+↓
+50
+↓
+25
+↓
+12
+↓
+6
+↓
+3
+↓
+1
+
+This makes Binary Search very efficient.
+
+Time Complexity
+Case	Time Complexity
+Best Case	O(1)
+Average Case	O(log n)
+Worst Case	O(log n)
+Space Complexity
+O(1)
+
+for the iterative version.
+
+Important Requirement
+
+⚠️ Binary Search requires a sorted array.
+
+Correct:
+
+[2, 5, 8, 12, 16, 23]
+
+Incorrect:
+
+[12, 2, 23, 5, 8]
+
+If the array is unsorted, Binary Search may give incorrect results.
+
+Recursive Binary Search
+
+Binary Search can also be written using recursion.
+
+def binary_search(arr, left, right, target):
+    if left > right:
+        return -1
+
+    mid = (left + right) // 2
+
+    if arr[mid] == target:
+        return mid
+
+    elif arr[mid] < target:
+        return binary_search(arr, mid + 1, right, target)
+
+    else:
+        return binary_search(arr, left, mid - 1, target)
+
+
+arr = [2, 5, 8, 12, 16, 23, 38, 56]
+
+print(binary_search(arr, 0, len(arr) - 1, 23))
+Iterative vs Recursive
+Feature	Iterative	Recursive
+Uses loop	Yes	No
+Uses recursion	No	Yes
+Extra space	O(1)	O(log n)
+Easy for beginners	Yes	Slightly harder
+Key Takeaways
+Binary Search works only on a sorted array.
+It repeatedly divides the search space into half.
+It uses left, right, and mid.
+Worst-case time complexity is O(log n).
+Iterative space complexity is O(1).
+It is much faster than Linear Search for large sorted data.
