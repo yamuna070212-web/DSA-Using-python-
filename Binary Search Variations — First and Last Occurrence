@@ -1,0 +1,164 @@
+First and Last Occurrence
+
+When an element appears multiple times in a sorted array, normal Binary Search can find an occurrence, but we may specifically need the first or last occurrence.
+
+Example:
+
+arr = [1, 2, 2, 2, 3, 4]
+target = 2
+
+Indexes:
+
+Index:  0  1  2  3  4  5
+Value:  1  2  2  2  3  4
+           ↑  ↑  ↑
+First occurrence → 1
+Last occurrence → 3
+🔎 First Occurrence
+
+When we find the target, don't stop immediately.
+
+Save the index and continue searching toward the left.
+
+def first_occurrence(arr, target):
+    left = 0
+    right = len(arr) - 1
+    result = -1
+
+    while left <= right:
+        mid = (left + right) // 2
+
+        if arr[mid] == target:
+            result = mid
+            right = mid - 1
+
+        elif arr[mid] < target:
+            left = mid + 1
+
+        else:
+            right = mid - 1
+
+    return result
+
+Example:
+
+arr = [1, 2, 2, 2, 3, 4]
+
+print(first_occurrence(arr, 2))
+
+Output:
+
+1
+🔎 Last Occurrence
+
+When we find the target, save the index and continue searching toward the right.
+
+def last_occurrence(arr, target):
+    left = 0
+    right = len(arr) - 1
+    result = -1
+
+    while left <= right:
+        mid = (left + right) // 2
+
+        if arr[mid] == target:
+            result = mid
+            left = mid + 1
+
+        elif arr[mid] < target:
+            left = mid + 1
+
+        else:
+            right = mid - 1
+
+    return result
+
+Example:
+
+arr = [1, 2, 2, 2, 3, 4]
+
+print(last_occurrence(arr, 2))
+
+Output:
+
+3
+📌 Find Both
+def first_occurrence(arr, target):
+    left = 0
+    right = len(arr) - 1
+    result = -1
+
+    while left <= right:
+        mid = (left + right) // 2
+
+        if arr[mid] == target:
+            result = mid
+            right = mid - 1
+        elif arr[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+
+    return result
+
+
+def last_occurrence(arr, target):
+    left = 0
+    right = len(arr) - 1
+    result = -1
+
+    while left <= right:
+        mid = (left + right) // 2
+
+        if arr[mid] == target:
+            result = mid
+            left = mid + 1
+        elif arr[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+
+    return result
+
+
+arr = [1, 2, 2, 2, 3, 4]
+
+print("First:", first_occurrence(arr, 2))
+print("Last:", last_occurrence(arr, 2))
+
+Output:
+
+First: 1
+Last: 3
+🔢 Count Occurrences
+
+Once we know the first and last positions:
+
+Count = last - first + 1
+
+For:
+
+first = 1
+last = 3
+count = 3 - 1 + 1
+      = 3
+
+So 2 appears 3 times.
+
+Time Complexity
+
+Both searches use Binary Search:
+
+Time:  O(log n)
+Space: O(1)
+
+Finding both first and last occurrence is still:
+
+O(log n)
+Key Takeaways
+First occurrence → when found, continue left.
+Last occurrence → when found, continue right.
+Store the answer before continuing.
+Works on a sorted array.
+Time complexity: O(log n).
+Space complexity: O(1).
