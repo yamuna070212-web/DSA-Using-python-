@@ -1,0 +1,204 @@
+Binary Search on Answer
+
+Binary Search on Answer is a technique where we use Binary Search not to find an element in an array, but to find the minimum or maximum possible answer.
+
+It is useful when the possible answers form a monotonic pattern.
+
+Basic Idea
+
+Suppose the answer can be between:
+
+1 to 100
+
+Instead of checking every answer:
+
+1, 2, 3, 4, 5, ...
+
+we use Binary Search:
+
+1 → 50 → 25 → 12 → 18 → ...
+
+This reduces the number of checks significantly.
+
+Example: Minimum Capacity
+
+Suppose we have packages:
+
+[1, 2, 3, 4, 5]
+
+We need to transport them in 3 days.
+
+The packages must be transported in order.
+
+We want to find the minimum capacity of the truck.
+
+Possible Answers
+
+The minimum capacity cannot be less than the largest package:
+
+5
+
+The maximum possible capacity is the total weight:
+
+1 + 2 + 3 + 4 + 5 = 15
+
+So our search range is:
+
+5 to 15
+
+Instead of testing every capacity, we binary search this range.
+
+Important Concept: Feasibility Function
+
+We create a function that answers:
+
+"Can this capacity transport all packages within 3 days?"
+
+For example:
+
+capacity = 5
+
+We can check whether it is possible.
+
+If it works:
+
+capacity = 5 → Possible
+
+Then perhaps a smaller capacity could also work.
+
+If it doesn't work:
+
+capacity = 4 → Not possible
+
+We need a larger capacity.
+
+This gives us a pattern:
+
+Not Possible  Not Possible  Possible  Possible  Possible
+     ❌            ❌             ✅        ✅        ✅
+
+This pattern is what allows Binary Search.
+
+Python Code
+def can_ship(weights, capacity, days):
+    current_weight = 0
+    required_days = 1
+
+    for weight in weights:
+        if current_weight + weight > capacity:
+            required_days += 1
+            current_weight = 0
+
+        current_weight += weight
+
+    return required_days <= days
+
+
+def minimum_capacity(weights, days):
+    left = max(weights)
+    right = sum(weights)
+
+    while left < right:
+        mid = (left + right) // 2
+
+        if can_ship(weights, mid, days):
+            right = mid
+        else:
+            left = mid + 1
+
+    return left
+
+
+weights = [1, 2, 3, 4, 5]
+days = 3
+
+print(minimum_capacity(weights, days))
+Output
+6
+
+The minimum truck capacity is:
+
+6
+Why Is the Answer 6?
+
+With capacity 6:
+
+Day 1 → 1 + 2 + 3 = 6
+Day 2 → 4
+Day 3 → 5
+
+So everything can be transported within 3 days.
+
+Capacity 5 would require more than 3 days.
+
+Therefore:
+
+Answer = 6
+Binary Search Pattern
+
+For minimum possible answer:
+
+left = minimum_possible
+right = maximum_possible
+
+while left < right:
+    mid = (left + right) // 2
+
+    if is_possible(mid):
+        right = mid
+    else:
+        left = mid + 1
+
+return left
+
+For maximum possible answer, the movement is usually reversed:
+
+if is_possible(mid):
+    left = mid + 1
+else:
+    right = mid
+
+The exact boundary depends on the problem.
+
+Where Is It Used?
+
+Binary Search on Answer commonly appears in problems such as:
+
+Minimum shipping capacity
+Minimum eating speed
+Minimum time to complete tasks
+Allocate books
+Split array into groups
+Aggressive cows
+Maximum minimum distance
+Scheduling problems
+Normal Binary Search vs Binary Search on Answer
+Normal Binary Search	Binary Search on Answer
+Searches an array	Searches possible answers
+Usually needs sorted data	Needs a monotonic feasibility condition
+Searches for a value/index	Searches for minimum/maximum answer
+arr[mid] is checked	is_possible(mid) is checked
+Time Complexity
+
+If checking whether an answer is possible takes O(n):
+
+Binary Search → O(log range)
+Check → O(n)
+
+Total:
+
+O(n log range)
+
+Space complexity is usually:
+
+O(1)
+
+apart from any extra space used by the feasibility function.
+
+Key Takeaways
+Binary Search can be used on answers, not just arrays.
+First identify the possible answer range.
+Create a function such as is_possible().
+The possible answers should have a monotonic pattern.
+For minimum answer, search toward the left when the answer is possible.
+Common complexity: O(n log range).
