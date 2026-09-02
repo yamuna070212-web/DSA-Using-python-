@@ -1,0 +1,224 @@
+Recursion Basics
+
+Recursion is a technique where a function calls itself to solve a smaller version of the same problem.
+
+A recursive function needs two important parts:
+
+Base Case → stops the recursion.
+Recursive Case → function calls itself with a smaller/simpler input.
+1. Simple Example
+
+Print numbers from 1 to 5:
+
+def print_numbers(n):
+    if n == 0:          # Base Case
+        return
+
+    print_numbers(n - 1)  # Recursive Case
+    print(n)
+
+
+print_numbers(5)
+Output
+1
+2
+3
+4
+5
+2. How It Works
+
+When we call:
+
+print_numbers(5)
+
+It keeps calling:
+
+print_numbers(5)
+      ↓
+print_numbers(4)
+      ↓
+print_numbers(3)
+      ↓
+print_numbers(2)
+      ↓
+print_numbers(1)
+      ↓
+print_numbers(0)
+
+At 0, the base case stops the recursion.
+
+Then the functions return:
+
+1
+2
+3
+4
+5
+3. Base Case
+
+The base case tells the function:
+
+When should I stop?
+
+Example:
+
+if n == 0:
+    return
+
+Without a proper base case, the function can keep calling itself indefinitely.
+
+4. Recursive Case
+
+The recursive case is where the function calls itself.
+
+print_numbers(n - 1)
+
+Notice that n becomes smaller:
+
+5 → 4 → 3 → 2 → 1 → 0
+
+This helps the function eventually reach the base case.
+
+5. Factorial Using Recursion
+
+Factorial of 5:
+
+5! = 5 × 4 × 3 × 2 × 1
+
+Python:
+
+def factorial(n):
+    if n == 0 or n == 1:
+        return 1
+
+    return n * factorial(n - 1)
+
+
+print(factorial(5))
+
+Output:
+
+120
+How Factorial Works
+factorial(5)
+= 5 × factorial(4)
+
+= 5 × 4 × factorial(3)
+
+= 5 × 4 × 3 × factorial(2)
+
+= 5 × 4 × 3 × 2 × factorial(1)
+
+= 5 × 4 × 3 × 2 × 1
+
+= 120
+6. Sum of Numbers
+
+Find:
+
+1 + 2 + 3 + 4 + 5
+def sum_numbers(n):
+    if n == 0:
+        return 0
+
+    return n + sum_numbers(n - 1)
+
+
+print(sum_numbers(5))
+
+Output:
+
+15
+7. Recursion and Call Stack
+
+Every recursive function call is stored in the call stack.
+
+For:
+
+factorial(3)
+
+The stack grows:
+
+factorial(3)
+factorial(2)
+factorial(1)
+
+Then it starts returning:
+
+factorial(1) → 1
+factorial(2) → 2
+factorial(3) → 6
+8. Recursion vs Loop
+
+The same problem can often be solved using either recursion or a loop.
+
+Using Loop
+def factorial(n):
+    result = 1
+
+    for i in range(1, n + 1):
+        result *= i
+
+    return result
+Using Recursion
+def factorial(n):
+    if n <= 1:
+        return 1
+
+    return n * factorial(n - 1)
+
+Both produce the same result.
+
+9. Recursion Example: Reverse a String
+def reverse_string(s):
+    if len(s) <= 1:
+        return s
+
+    return reverse_string(s[1:]) + s[0]
+
+
+print(reverse_string("python"))
+
+Output:
+
+nohtyp
+10. Important Pattern
+
+Most recursive problems follow this structure:
+
+def function(problem):
+
+    if base_condition:
+        return result
+
+    return function(smaller_problem)
+
+Remember:
+
+Base Case
+    ↓
+Recursive Case
+    ↓
+Smaller Problem
+    ↓
+Base Case
+Time and Space Complexity
+
+For simple recursion that makes one call for each value from n down to 0:
+
+Time:
+
+O(n)
+
+Space:
+
+O(n)
+
+because the recursive calls occupy the call stack.
+
+Key Takeaways
+Recursion means a function calls itself.
+Every recursive solution needs a base case.
+The recursive call should move toward the base case.
+Recursive calls use the call stack.
+Recursion is commonly used in trees, graphs, backtracking, and divide-and-conquer algorithms.
