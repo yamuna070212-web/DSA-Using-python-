@@ -1,0 +1,249 @@
+Recursion Problems
+1. Print Numbers from 1 to N
+Problem
+
+Print numbers from 1 to N using recursion.
+
+Example
+
+For N = 5:
+
+1
+2
+3
+4
+5
+Code
+def print_1_to_n(n):
+    if n == 0:
+        return
+
+    print_1_to_n(n - 1)
+    print(n)
+
+
+print_1_to_n(5)
+How it works
+print_1_to_n(5)
+ → print_1_to_n(4)
+   → print_1_to_n(3)
+     → print_1_to_n(2)
+       → print_1_to_n(1)
+         → print_1_to_n(0)
+
+Then the functions return and print:
+
+1
+2
+3
+4
+5
+2. Print Numbers from N to 1
+Problem
+
+Print numbers from N down to 1.
+
+Example
+
+For N = 5:
+
+5
+4
+3
+2
+1
+Code
+def print_n_to_1(n):
+    if n == 0:
+        return
+
+    print(n)
+    print_n_to_1(n - 1)
+
+
+print_n_to_1(5)
+Important Difference
+
+Print before recursion:
+
+print(n)
+print_n_to_1(n - 1)
+
+→ N to 1
+
+Print after recursion:
+
+print_n_to_1(n - 1)
+print(n)
+
+→ 1 to N
+
+3. Factorial of N
+Formula
+n! = n × (n-1)!
+
+Base case:
+
+0! = 1
+Code
+def factorial(n):
+    if n == 0:
+        return 1
+
+    return n * factorial(n - 1)
+
+
+print(factorial(5))
+Output
+120
+Working
+5 × factorial(4)
+5 × 4 × factorial(3)
+5 × 4 × 3 × factorial(2)
+5 × 4 × 3 × 2 × factorial(1)
+5 × 4 × 3 × 2 × 1
+= 120
+4. Sum of First N Natural Numbers
+Problem
+
+Find:
+
+1 + 2 + 3 + ... + N
+Formula
+sum(n) = n + sum(n-1)
+Code
+def sum_n(n):
+    if n == 0:
+        return 0
+
+    return n + sum_n(n - 1)
+
+
+print(sum_n(5))
+Output
+15
+5. Calculate Power Using Recursion
+Problem
+
+Calculate:
+
+2^5
+Formula
+power(a, n) = a × power(a, n-1)
+Code
+def power(a, n):
+    if n == 0:
+        return 1
+
+    return a * power(a, n - 1)
+
+
+print(power(2, 5))
+Output
+32
+6. Reverse a String
+Problem
+
+Reverse:
+
+"hello"
+Code
+def reverse_string(s):
+    if len(s) == 0:
+        return ""
+
+    return reverse_string(s[1:]) + s[0]
+
+
+print(reverse_string("hello"))
+Output
+olleh
+7. Find the Sum of Elements in an Array
+Example
+[2, 4, 6, 8]
+
+Sum:
+
+20
+Code
+def array_sum(arr, index):
+    if index == len(arr):
+        return 0
+
+    return arr[index] + array_sum(arr, index + 1)
+
+
+arr = [2, 4, 6, 8]
+
+print(array_sum(arr, 0))
+Output
+20
+8. Count Digits of a Number
+Example
+Input: 12345
+Output: 5
+Code
+def count_digits(n):
+    if n == 0:
+        return 0
+
+    return 1 + count_digits(n // 10)
+
+
+print(count_digits(12345))
+Output
+5
+9. Find the Sum of Digits
+Example
+12345
+
+Calculation:
+
+1 + 2 + 3 + 4 + 5 = 15
+Code
+def digit_sum(n):
+    if n == 0:
+        return 0
+
+    return (n % 10) + digit_sum(n // 10)
+
+
+print(digit_sum(12345))
+Output
+15
+10. Check if a String is Palindrome
+
+A palindrome reads the same forward and backward.
+
+Examples:
+
+madam → palindrome
+hello → not palindrome
+Code
+def is_palindrome(s, left, right):
+    if left >= right:
+        return True
+
+    if s[left] != s[right]:
+        return False
+
+    return is_palindrome(s, left + 1, right - 1)
+
+
+s = "madam"
+
+print(is_palindrome(s, 0, len(s) - 1))
+Output
+True
+Complexity
+Problem	Time	Space
+Print 1 to N	O(N)	O(N)
+Print N to 1	O(N)	O(N)
+Factorial	O(N)	O(N)
+Sum of N numbers	O(N)	O(N)
+Power	O(N)	O(N)
+Reverse string	O(N)	O(N)
+Array sum	O(N)	O(N)
+Count digits	O(log N)	O(log N)
+Digit sum	O(log N)	O(log N)
+Palindrome	O(N)	O(N)
