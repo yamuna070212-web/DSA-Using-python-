@@ -1,0 +1,176 @@
+Fibonacci & Multiple Recursive Calls
+1. Fibonacci Sequence
+
+The Fibonacci sequence is a sequence where each number is the sum of the previous two numbers.
+
+0, 1, 1, 2, 3, 5, 8, 13, 21, ...
+Rule
+F(n) = F(n-1) + F(n-2)
+Base Cases
+F(0) = 0
+F(1) = 1
+2. Fibonacci Using Recursion
+def fibonacci(n):
+    if n == 0:
+        return 0
+
+    if n == 1:
+        return 1
+
+    return fibonacci(n - 1) + fibonacci(n - 2)
+
+
+print(fibonacci(6))
+Output
+8
+
+Because:
+
+F(6)
+= F(5) + F(4)
+= 5 + 3
+= 8
+3. Understanding Multiple Recursive Calls
+
+In some recursive problems, one function makes more than one recursive call.
+
+For Fibonacci:
+
+return fibonacci(n - 1) + fibonacci(n - 2)
+
+There are two recursive calls:
+
+fibonacci(n - 1)
+fibonacci(n - 2)
+
+This creates a branching structure.
+
+For example:
+
+                 F(4)
+                /    \
+             F(3)    F(2)
+             /  \     / \
+          F(2) F(1) F(1) F(0)
+          / \
+       F(1) F(0)
+
+This is why the simple recursive Fibonacci solution performs many repeated calculations.
+
+4. Generate Fibonacci Numbers
+
+The previous program finds the Fibonacci number at a particular position.
+
+Now let's print the first N Fibonacci numbers.
+
+Code
+def fibonacci(n):
+    if n == 0:
+        return 0
+
+    if n == 1:
+        return 1
+
+    return fibonacci(n - 1) + fibonacci(n - 2)
+
+
+n = 7
+
+for i in range(n):
+    print(fibonacci(i), end=" ")
+Output
+0 1 1 2 3 5 8
+5. Why Recursive Fibonacci Is Slow
+
+Consider:
+
+fibonacci(5)
+
+It calculates:
+
+fibonacci(4)
+fibonacci(3)
+
+But fibonacci(3) and other smaller values are calculated again and again.
+
+For example:
+
+F(5)
+├── F(4)
+│   ├── F(3)
+│   └── F(2)
+└── F(3)
+    ├── F(2)
+    └── F(1)
+
+Notice that F(3) and F(2) are repeated.
+
+This repeated work makes the simple recursive solution inefficient.
+
+6. Time and Space Complexity
+
+For the simple recursive Fibonacci implementation:
+
+Time Complexity: O(2^N)
+Space Complexity: O(N)
+
+The space is mainly used by the recursion call stack.
+
+7. Fibonacci with Memoization
+
+We can avoid repeated calculations by storing already calculated results.
+
+This technique is called memoization.
+
+Code
+def fibonacci(n, memo=None):
+    if memo is None:
+        memo = {}
+
+    if n in memo:
+        return memo[n]
+
+    if n == 0:
+        return 0
+
+    if n == 1:
+        return 1
+
+    memo[n] = fibonacci(n - 1, memo) + fibonacci(n - 2, memo)
+
+    return memo[n]
+
+
+print(fibonacci(10))
+Output
+55
+
+Now each Fibonacci value is calculated only once.
+
+Complexity
+Time: O(N)
+Space: O(N)
+8. Simple Comparison
+Method	Time	Space
+Simple recursion	O(2^N)	O(N)
+Recursion + memoization	O(N)	O(N)
+9. Important Recursion Pattern
+
+Some recursion problems have:
+
+One recursive call
+fun(n - 1)
+
+Example:
+
+Factorial
+Sum of N numbers
+Two recursive calls
+fun(n - 1)
+fun(n - 2)
+
+Example:
+
+Fibonacci
+
+Two recursive calls can create a branching recursion tree and may result in repeated calculations.
