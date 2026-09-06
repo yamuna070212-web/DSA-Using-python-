@@ -1,0 +1,477 @@
+# Subsets and Subsequences
+
+## 1. What is a Subset?
+
+A **subset** is a collection of elements taken from an array where the order does not matter.
+
+For:
+
+```text
+[1, 2, 3]
+```
+
+The subsets are:
+
+```text
+[]
+[1]
+[2]
+[3]
+[1, 2]
+[1, 3]
+[2, 3]
+[1, 2, 3]
+```
+
+For `N` elements, the total number of subsets is:
+
+```text
+2^N
+```
+
+---
+
+## 2. Include / Exclude Method
+
+For every element, we have two choices:
+
+```text
+Include the element
+OR
+Exclude the element
+```
+
+For `[1, 2]`:
+
+```text
+                []
+              /    \
+           take 1  skip 1
+            [1]      []
+           /  \      /  \
+        take2 skip2 take2 skip2
+        [1,2] [1]   [2]   []
+```
+
+Therefore:
+
+```text
+[1, 2]
+[1]
+[2]
+[]
+```
+
+---
+
+## 3. Generate All Subsets
+
+```python
+def generate_subsets(arr):
+    result = []
+
+    def backtrack(index, current):
+        if index == len(arr):
+            result.append(current.copy())
+            return
+
+        # Include
+        current.append(arr[index])
+        backtrack(index + 1, current)
+
+        # Undo
+        current.pop()
+
+        # Exclude
+        backtrack(index + 1, current)
+
+    backtrack(0, [])
+
+    return result
+
+
+arr = [1, 2, 3]
+
+print(generate_subsets(arr))
+```
+
+Possible output:
+
+```text
+[[1, 2, 3],
+ [1, 2],
+ [1, 3],
+ [1],
+ [2, 3],
+ [2],
+ [3],
+ []]
+```
+
+---
+
+## 4. What is a Subsequence?
+
+A **subsequence** is formed by deleting zero or more elements from an array while keeping the original order.
+
+Example:
+
+```text
+[1, 2, 3]
+```
+
+Valid subsequences include:
+
+```text
+[]
+[1]
+[2]
+[3]
+[1, 2]
+[1, 3]
+[2, 3]
+[1, 2, 3]
+```
+
+Notice:
+
+```text
+[1, 3]
+```
+
+is valid because `1` comes before `3`.
+
+But:
+
+```text
+[3, 1]
+```
+
+is not a subsequence because the original order is changed.
+
+---
+
+## 5. Subset vs Subsequence
+
+| Subset                             | Subsequence                                  |
+| ---------------------------------- | -------------------------------------------- |
+| Order generally doesn't matter     | Original order must be maintained            |
+| Elements can be selected           | Elements are selected while preserving order |
+| Example: `{1, 3}`                  | Example: `[1, 3]`                            |
+| Often generated using backtracking | Often generated using recursion/backtracking |
+
+For many basic array problems, the **include/exclude recursion** can generate both because it processes elements from left to right.
+
+---
+
+## 6. Print All Subsequences
+
+Instead of storing every subsequence, we can directly print them.
+
+```python
+def print_subsequences(arr):
+    def backtrack(index, current):
+        if index == len(arr):
+            print(current)
+            return
+
+        # Include
+        current.append(arr[index])
+        backtrack(index + 1, current)
+
+        # Undo
+        current.pop()
+
+        # Exclude
+        backtrack(index + 1, current)
+
+    backtrack(0, [])
+
+
+arr = [1, 2, 3]
+
+print_subsequences(arr)
+```
+
+Output:
+
+```text
+[1, 2, 3]
+[1, 2]
+[1, 3]
+[1]
+[2, 3]
+[2]
+[3]
+[]
+```
+
+---
+
+## 7. Find a Subsequence with a Given Sum
+
+Suppose:
+
+```text
+arr = [1, 2, 3]
+target = 3
+```
+
+We want to find a subsequence whose sum is `3`.
+
+Possible answers include:
+
+```text
+[1, 2]
+[3]
+```
+
+### Code
+
+```python
+def find_subsequence(arr, target):
+    def backtrack(index, current, total):
+        if index == len(arr):
+            if total == target:
+                print(current)
+            return
+
+        # Include
+        current.append(arr[index])
+        backtrack(index + 1, current, total + arr[index])
+
+        # Undo
+        current.pop()
+
+        # Exclude
+        backtrack(index + 1, current, total)
+
+    backtrack(0, [], 0)
+
+
+arr = [1, 2, 3]
+target = 3
+
+find_subsequence(arr, target)
+```
+
+Possible output:
+
+```text
+[1, 2]
+[3]
+```
+
+---
+
+## 8. Count Subsequences with a Given Sum
+
+Instead of printing the subsequences, we can count them.
+
+```python
+def count_subsequences(arr, target):
+    def backtrack(index, total):
+        if index == len(arr):
+            if total == target:
+                return 1
+            return 0
+
+        include = backtrack(
+            index + 1,
+            total + arr[index]
+        )
+
+        exclude = backtrack(
+            index + 1,
+            total
+        )
+
+        return include + exclude
+
+    return backtrack(0, 0)
+
+
+arr = [1, 2, 3]
+target = 3
+
+print(count_subsequences(arr, target))
+```
+
+Output:
+
+```text
+2
+```
+
+Because:
+
+```text
+[1, 2]
+[3]
+```
+
+are two valid subsequences.
+
+---
+
+## 9. Find the First Valid Subsequence
+
+Sometimes we only need **one** valid subsequence.
+
+```python
+def find_one(arr, target):
+    def backtrack(index, current, total):
+        if index == len(arr):
+            return total == target
+
+        # Include
+        current.append(arr[index])
+
+        if backtrack(index + 1, current, total + arr[index]):
+            return True
+
+        current.pop()
+
+        # Exclude
+        if backtrack(index + 1, current, total):
+            return True
+
+        return False
+
+    current = []
+
+    if backtrack(0, current, 0):
+        return current
+
+    return None
+
+
+arr = [1, 2, 3]
+target = 3
+
+print(find_one(arr, target))
+```
+
+Possible output:
+
+```text
+[1, 2]
+```
+
+---
+
+## 10. Recursion Tree Idea
+
+For each element:
+
+```text
+             element
+             /     \
+        Include   Exclude
+          /          \
+     next element   next element
+```
+
+This continues until every element has been considered.
+
+For `N` elements:
+
+```text
+Number of possibilities = 2^N
+```
+
+---
+
+## 11. Complexity
+
+For generating all subsets/subsequences:
+
+```text
+Time Complexity: O(2^N)
+```
+
+There are `2^N` possible choices.
+
+The recursion depth is:
+
+```text
+Space Complexity: O(N)
+```
+
+If all results are stored, the total memory required can be larger because the results themselves must also be stored.
+
+---
+
+## 12. Important Pattern
+
+Remember this pattern:
+
+```python
+def backtrack(index, current):
+
+    if index == len(arr):
+        # process answer
+        return
+
+    # Include
+    current.append(arr[index])
+    backtrack(index + 1, current)
+
+    # Undo
+    current.pop()
+
+    # Exclude
+    backtrack(index + 1, current)
+```
+
+This pattern is extremely useful for learning backtracking.
+
+---
+
+## 💡 Extra Tips
+
+* Think of every element as a **yes/no decision**.
+* `append()` → make a choice.
+* Recursive call → explore the choice.
+* `pop()` → undo the choice.
+* `index + 1` → move to the next element.
+* Use `.copy()` when storing the current list.
+
+## ⚠️ Common Mistakes
+
+### Forgetting `pop()`
+
+```python
+current.append(arr[index])
+backtrack(index + 1, current)
+```
+
+You should usually undo it afterward:
+
+```python
+current.pop()
+```
+
+### Changing the order
+
+A subsequence must preserve the original order.
+
+For:
+
+```text
+[1, 2, 3]
+```
+
+`[1, 3]` is valid.
+
+`[3, 1]` is not.
+
+### Forgetting the base case
+
+Always stop when:
+
+```python
+index == len(arr)
+```
+
+---
