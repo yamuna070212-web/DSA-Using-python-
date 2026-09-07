@@ -1,0 +1,387 @@
+# Permutations Using Backtracking
+
+## 1. What is a Permutation?
+
+A **permutation** is an arrangement of elements where the **order matters**.
+
+For:
+
+```text
+[1, 2, 3]
+```
+
+The permutations are:
+
+```text
+[1, 2, 3]
+[1, 3, 2]
+[2, 1, 3]
+[2, 3, 1]
+[3, 1, 2]
+[3, 2, 1]
+```
+
+There are **6 permutations**.
+
+---
+
+## 2. Number of Permutations
+
+For `N` different elements:
+
+```text
+Number of permutations = N!
+```
+
+For 3 elements:
+
+```text
+3! = 3 × 2 × 1 = 6
+```
+
+For 4 elements:
+
+```text
+4! = 4 × 3 × 2 × 1 = 24
+```
+
+---
+
+## 3. How Backtracking Works
+
+At each position, choose one unused element.
+
+For:
+
+```text
+[1, 2, 3]
+```
+
+First position:
+
+```text
+1 or 2 or 3
+```
+
+If we choose `1`:
+
+```text
+[1]
+```
+
+The next position can be:
+
+```text
+2 or 3
+```
+
+If we choose `2`:
+
+```text
+[1, 2]
+```
+
+Then only `3` remains:
+
+```text
+[1, 2, 3]
+```
+
+After reaching a complete permutation, we **undo the choice** and try another option.
+
+---
+
+## 4. Using a `used` Array
+
+A simple way to track which elements have already been selected is a Boolean array.
+
+Example:
+
+```text
+arr = [1, 2, 3]
+
+used = [False, False, False]
+```
+
+If we choose `1`:
+
+```text
+used = [True, False, False]
+```
+
+After finishing that branch, we undo:
+
+```text
+used = [False, False, False]
+```
+
+---
+
+## 5. Generate All Permutations
+
+```python
+def permutations(arr):
+    result = []
+    used = [False] * len(arr)
+
+    def backtrack(current):
+        if len(current) == len(arr):
+            result.append(current.copy())
+            return
+
+        for i in range(len(arr)):
+            if used[i]:
+                continue
+
+            # Choose
+            used[i] = True
+            current.append(arr[i])
+
+            # Explore
+            backtrack(current)
+
+            # Undo
+            current.pop()
+            used[i] = False
+
+    backtrack([])
+
+    return result
+
+
+arr = [1, 2, 3]
+
+print(permutations(arr))
+```
+
+### Output
+
+```text
+[[1, 2, 3],
+ [1, 3, 2],
+ [2, 1, 3],
+ [2, 3, 1],
+ [3, 1, 2],
+ [3, 2, 1]]
+```
+
+---
+
+## 6. Understanding the Code
+
+### Step 1: Create result
+
+```python
+result = []
+```
+
+Stores all completed permutations.
+
+### Step 2: Track used elements
+
+```python
+used = [False] * len(arr)
+```
+
+For `[1, 2, 3]`:
+
+```text
+[False, False, False]
+```
+
+### Step 3: Check if permutation is complete
+
+```python
+if len(current) == len(arr):
+```
+
+If the current permutation contains all elements, save it.
+
+### Step 4: Try every element
+
+```python
+for i in range(len(arr)):
+```
+
+We check every possible choice.
+
+### Step 5: Skip already-used elements
+
+```python
+if used[i]:
+    continue
+```
+
+An element cannot be used twice in the same permutation.
+
+### Step 6: Make the choice
+
+```python
+used[i] = True
+current.append(arr[i])
+```
+
+### Step 7: Explore
+
+```python
+backtrack(current)
+```
+
+### Step 8: Undo
+
+```python
+current.pop()
+used[i] = False
+```
+
+This is the **backtracking step**.
+
+---
+
+## 7. Recursion Tree
+
+For `[1, 2, 3]`:
+
+```text
+                    []
+              /      |      \
+            [1]     [2]     [3]
+           /  \     /  \     /  \
+       [1,2] [1,3] [2,1] [2,3] [3,1] [3,2]
+          |     |     |     |     |     |
+       [1,2,3][1,3,2] ...   ...   ... [3,2,1]
+```
+
+Each level represents one position in the permutation.
+
+---
+
+## 8. Permutations vs Subsets
+
+| Subsets                                          | Permutations                      |
+| ------------------------------------------------ | --------------------------------- |
+| Order usually doesn't matter                     | Order matters                     |
+| `[1,2]` and `[2,1]` represent the same selection | `[1,2]` and `[2,1]` are different |
+| Uses include/exclude                             | Chooses an unused element         |
+| Number: `2^N`                                    | Number: `N!`                      |
+
+---
+
+## 9. Complexity
+
+For `N` distinct elements, there are:
+
+```text
+N!
+```
+
+permutations.
+
+Generating all permutations takes approximately:
+
+```text
+Time: O(N × N!)
+```
+
+because there are `N!` results and each result contains `N` elements.
+
+The recursion depth is:
+
+```text
+O(N)
+```
+
+The `result` list itself requires additional memory to store all permutations.
+
+---
+
+## 10. Example with Two Elements
+
+For:
+
+```text
+[1, 2]
+```
+
+Start:
+
+```text
+[]
+```
+
+Choose `1`:
+
+```text
+[1]
+```
+
+Choose `2`:
+
+```text
+[1, 2]
+```
+
+Undo `2`:
+
+```text
+[1]
+```
+
+Undo `1`:
+
+```text
+[]
+```
+
+Choose `2`:
+
+```text
+[2]
+```
+
+Choose `1`:
+
+```text
+[2, 1]
+```
+
+Final result:
+
+```text
+[1, 2]
+[2, 1]
+```
+
+---
+
+## 11. Important Backtracking Pattern
+
+Remember this pattern:
+
+```python
+for choice in choices:
+
+    if choice_is_used:
+        continue
+
+    # Choose
+    make_choice()
+
+    # Explore
+    backtrack()
+
+    # Undo
+    undo_choice()
+```
+
+For permutations:
+
+```python
+used[i] = True
+current.append(arr[i])
+
+backtrack(current)
+
+current.pop()
+used[i] = False
+`
