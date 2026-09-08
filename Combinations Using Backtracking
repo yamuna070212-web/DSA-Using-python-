@@ -1,0 +1,465 @@
+# Combinations Using Backtracking
+
+## 1. What is a Combination?
+
+A **combination** is a selection of elements where **order does not matter**.
+
+For example, selecting 2 elements from:
+
+```text
+[1, 2, 3]
+```
+
+The combinations are:
+
+```text
+[1, 2]
+[1, 3]
+[2, 3]
+```
+
+Notice:
+
+```text
+[1, 2] = [2, 1]
+```
+
+They are considered the same combination.
+
+---
+
+## 2. Combination vs Permutation
+
+| Combination                      | Permutation                       |
+| -------------------------------- | --------------------------------- |
+| Order does not matter            | Order matters                     |
+| `[1,2]` and `[2,1]` are the same | `[1,2]` and `[2,1]` are different |
+| Used for selecting               | Used for arranging                |
+| Example: teams/groups            | Example: arrangements             |
+
+---
+
+## 3. Combination Formula
+
+The number of ways to choose `r` elements from `n` elements is:
+
+```text
+C(n, r) = n! / (r! × (n-r)!)
+```
+
+For example:
+
+```text
+C(4, 2)
+= 4! / (2! × 2!)
+= 6
+```
+
+So there are **6 combinations** of choosing 2 elements from 4.
+
+---
+
+## 4. Generate Combinations
+
+Suppose:
+
+```text
+arr = [1, 2, 3, 4]
+k = 2
+```
+
+We want:
+
+```text
+[1, 2]
+[1, 3]
+[1, 4]
+[2, 3]
+[2, 4]
+[3, 4]
+```
+
+### Code
+
+```python
+def combinations(arr, k):
+    result = []
+
+    def backtrack(start, current):
+        if len(current) == k:
+            result.append(current.copy())
+            return
+
+        for i in range(start, len(arr)):
+            current.append(arr[i])
+
+            backtrack(i + 1, current)
+
+            current.pop()
+
+    backtrack(0, [])
+
+    return result
+
+
+arr = [1, 2, 3, 4]
+
+print(combinations(arr, 2))
+```
+
+### Output
+
+```text
+[[1, 2],
+ [1, 3],
+ [1, 4],
+ [2, 3],
+ [2, 4],
+ [3, 4]]
+```
+
+---
+
+## 5. Understanding `start`
+
+The important part is:
+
+```python
+backtrack(i + 1, current)
+```
+
+After selecting `arr[i]`, we only consider elements **after it**.
+
+For example, after choosing `1`:
+
+```text
+[1]
+```
+
+we can choose:
+
+```text
+2, 3, 4
+```
+
+But we don't go back to `1`.
+
+After choosing `2`:
+
+```text
+[1, 2]
+```
+
+we continue from `3`.
+
+This prevents duplicate combinations.
+
+---
+
+## 6. Why Not Use `used[]`?
+
+For permutations, we used:
+
+```python
+used = [False] * len(arr)
+```
+
+For combinations, we usually don't need it.
+
+Instead, we use:
+
+```python
+start
+```
+
+This ensures that we only move forward through the array.
+
+### Example
+
+```text
+Choose 1
+ ↓
+Choose 2
+ ↓
+Choose 3
+```
+
+We never go backward and create:
+
+```text
+[2, 1]
+```
+
+because `[2,1]` would be the same combination as `[1,2]`.
+
+---
+
+## 7. Recursion Tree
+
+For:
+
+```text
+[1, 2, 3]
+k = 2
+```
+
+The choices look like:
+
+```text
+                 []
+             /    |    \
+           [1]   [2]   [3]
+          /  \     \
+       [1,2] [1,3] [2,3]
+```
+
+The final combinations are:
+
+```text
+[1,2]
+[1,3]
+[2,3]
+```
+
+---
+
+## 8. Step-by-Step Example
+
+Given:
+
+```text
+[1, 2, 3]
+k = 2
+```
+
+Start:
+
+```text
+[]
+```
+
+Choose `1`:
+
+```text
+[1]
+```
+
+Choose `2`:
+
+```text
+[1,2]
+```
+
+Combination complete.
+
+Backtrack:
+
+```text
+[1]
+```
+
+Choose `3`:
+
+```text
+[1,3]
+```
+
+Backtrack completely:
+
+```text
+[]
+```
+
+Choose `2`:
+
+```text
+[2]
+```
+
+Choose `3`:
+
+```text
+[2,3]
+```
+
+Final result:
+
+```text
+[1,2]
+[1,3]
+[2,3]
+```
+
+---
+
+## 9. Generate Combinations of a String
+
+We can also generate combinations of characters.
+
+Example:
+
+```text
+ABC
+```
+
+Choose 2 characters:
+
+```text
+AB
+AC
+BC
+```
+
+### Code
+
+```python
+def string_combinations(s, k):
+    result = []
+
+    def backtrack(start, current):
+        if len(current) == k:
+            result.append("".join(current))
+            return
+
+        for i in range(start, len(s)):
+            current.append(s[i])
+
+            backtrack(i + 1, current)
+
+            current.pop()
+
+    backtrack(0, [])
+
+    return result
+
+
+print(string_combinations("ABC", 2))
+```
+
+### Output
+
+```text
+['AB', 'AC', 'BC']
+```
+
+---
+
+## 10. Combination Sum Idea
+
+A more advanced problem is **Combination Sum**.
+
+For example:
+
+```text
+arr = [2, 3, 6, 7]
+target = 7
+```
+
+We want combinations whose sum is `7`.
+
+One possible result is:
+
+```text
+[2, 2, 3]
+[7]
+```
+
+This problem introduces an important idea: sometimes an element can be selected more than once.
+
+The backtracking logic changes slightly depending on the problem.
+
+---
+
+## 11. General Combination Pattern
+
+Remember this pattern:
+
+```python
+def backtrack(start, current):
+
+    if condition_is_met:
+        # save answer
+        return
+
+    for i in range(start, len(arr)):
+
+        # Choose
+        current.append(arr[i])
+
+        # Explore
+        backtrack(i + 1, current)
+
+        # Undo
+        current.pop()
+```
+
+The key difference from permutations is:
+
+```python
+backtrack(i + 1, current)
+```
+
+rather than starting from `0`.
+
+---
+
+## 12. Combination vs Subsets
+
+A subset can have **any size**.
+
+For:
+
+```text
+[1, 2, 3]
+```
+
+subsets include:
+
+```text
+[]
+[1]
+[2]
+[3]
+[1,2]
+[1,3]
+[2,3]
+[1,2,3]
+```
+
+A combination problem usually specifies a particular size `k`.
+
+For `k = 2`:
+
+```text
+[1,2]
+[1,3]
+[2,3]
+```
+
+---
+
+## 13. Complexity
+
+If we generate all combinations of choosing `k` elements from `n` elements, the number of results is:
+
+```text
+C(n, k)
+```
+
+Since each result contains `k` elements, generating and storing them takes roughly:
+
+```text
+O(C(n,k) × k)
+```
+
+time.
+
+The recursion depth is at most:
+
+```text
+O(k)
+```
+
+excluding the memory required to store all answers.
+
+---
