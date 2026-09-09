@@ -1,0 +1,517 @@
+# Combination Sum & Advanced Backtracking
+
+## 1. Combination Sum
+
+Combination Sum is a backtracking problem where we find combinations of numbers that add up to a given target.
+
+Example:
+
+```text
+arr = [2, 3, 6, 7]
+target = 7
+```
+
+Possible combinations:
+
+```text
+[2, 2, 3]
+[7]
+```
+
+Here, `2` can be used more than once.
+
+---
+
+## 2. Basic Idea
+
+At every position, we have two choices:
+
+```text
+Take the current number
+OR
+Skip the current number
+```
+
+If we take the number, we can take it again.
+
+If we skip it, we move to the next number.
+
+---
+
+## 3. Combination Sum Code
+
+```python
+def combination_sum(arr, target):
+    result = []
+
+    def backtrack(start, current, total):
+        if total == target:
+            result.append(current.copy())
+            return
+
+        if total > target:
+            return
+
+        for i in range(start, len(arr)):
+            current.append(arr[i])
+
+            # i instead of i + 1
+            # because the same element can be reused
+            backtrack(i, current, total + arr[i])
+
+            current.pop()
+
+    backtrack(0, [], 0)
+
+    return result
+
+
+arr = [2, 3, 6, 7]
+target = 7
+
+print(combination_sum(arr, target))
+```
+
+Output:
+
+```text
+[[2, 2, 3], [7]]
+```
+
+---
+
+## 4. Why Do We Use `i` Instead of `i + 1`?
+
+This is very important.
+
+### When elements cannot be reused:
+
+```python
+backtrack(i + 1, current)
+```
+
+### When elements can be reused:
+
+```python
+backtrack(i, current)
+```
+
+So:
+
+```text
+i + 1 → move to next element
+i     → allow the current element again
+```
+
+---
+
+## 5. Example
+
+For:
+
+```text
+[2, 3, 6, 7]
+```
+
+Suppose we choose `2`:
+
+```text
+[2]
+```
+
+Because `2` can be reused, we can choose it again:
+
+```text
+[2, 2]
+```
+
+Again:
+
+```text
+[2, 2, 2]
+```
+
+Eventually:
+
+```text
+[2, 2, 3]
+```
+
+Sum:
+
+```text
+2 + 2 + 3 = 7
+```
+
+---
+
+## 6. Stopping Conditions
+
+There are two important conditions.
+
+### Target reached
+
+```python
+if total == target:
+    result.append(current.copy())
+    return
+```
+
+We found a valid combination.
+
+### Target exceeded
+
+```python
+if total > target:
+    return
+```
+
+There is no need to continue because the numbers are positive.
+
+---
+
+## 7. Combination Sum Without Reusing Elements
+
+Suppose every number can be used only once.
+
+Then use:
+
+```python
+backtrack(i + 1, current, total + arr[i])
+```
+
+Example:
+
+```python
+def combination_sum_once(arr, target):
+    result = []
+
+    def backtrack(start, current, total):
+        if total == target:
+            result.append(current.copy())
+            return
+
+        if total > target:
+            return
+
+        for i in range(start, len(arr)):
+            current.append(arr[i])
+
+            backtrack(i + 1, current, total + arr[i])
+
+            current.pop()
+
+    backtrack(0, [], 0)
+
+    return result
+
+
+arr = [2, 3, 5]
+target = 5
+
+print(combination_sum_once(arr, target))
+```
+
+Output:
+
+```text
+[[2, 3], [5]]
+```
+
+---
+
+## 8. Backtracking With a Constraint
+
+Backtracking becomes more powerful when we add a condition.
+
+Example:
+
+Find combinations of numbers whose sum is `7`.
+
+We don't need to explore a branch when:
+
+```text
+current sum > 7
+```
+
+This is called **pruning**.
+
+---
+
+## 9. What is Pruning?
+
+**Pruning** means stopping a branch early when we already know it cannot produce a valid answer.
+
+Example:
+
+```text
+Target = 7
+
+Current sum = 8
+```
+
+There is no reason to continue.
+
+So:
+
+```python
+if total > target:
+    return
+```
+
+cuts off that branch.
+
+This can make backtracking much faster.
+
+---
+
+## 10. General Backtracking Structure
+
+A common pattern is:
+
+```python
+def backtrack(start, current):
+
+    if solution_found:
+        save_solution()
+        return
+
+    for i in range(start, len(arr)):
+
+        if not_valid:
+            continue
+
+        # Choose
+        current.append(arr[i])
+
+        # Explore
+        backtrack(i + 1, current)
+
+        # Undo
+        current.pop()
+```
+
+---
+
+## 11. Backtracking Decision Process
+
+When solving a backtracking problem, ask:
+
+### Step 1
+
+**What are my choices?**
+
+Example:
+
+```text
+Choose 2
+Choose 3
+Choose 5
+```
+
+### Step 2
+
+**What is my current state?**
+
+Example:
+
+```text
+current = [2, 3]
+sum = 5
+```
+
+### Step 3
+
+**When is the answer complete?**
+
+Example:
+
+```text
+sum == target
+```
+
+### Step 4
+
+**When should I stop a branch?**
+
+Example:
+
+```text
+sum > target
+```
+
+### Step 5
+
+**How do I undo my choice?**
+
+Usually:
+
+```python
+current.pop()
+```
+
+---
+
+## 12. N-Queens
+
+Another famous backtracking problem is **N-Queens**.
+
+The goal is to place `N` queens on an `N × N` chessboard so that no two queens attack each other.
+
+For example, with `4 × 4`:
+
+```text
+. Q . .
+. . . Q
+Q . . .
+. . Q .
+```
+
+A queen cannot share the same:
+
+```text
+row
+column
+diagonal
+```
+
+Backtracking tries a position, checks whether it is safe, and if necessary removes the queen and tries another position.
+
+---
+
+## 13. N-Queens Pattern
+
+The basic idea is:
+
+```text
+Place queen
+    ↓
+Check if safe
+    ↓
+Continue to next row
+    ↓
+If invalid → remove queen
+    ↓
+Try another position
+```
+
+This is the same fundamental pattern:
+
+```text
+Choose → Explore → Undo
+```
+
+---
+
+## 14. Sudoku
+
+Sudoku can also be solved using backtracking.
+
+At an empty cell:
+
+```text
+Try a number
+     ↓
+Check if valid
+     ↓
+Place number
+     ↓
+Move to next empty cell
+     ↓
+If invalid → remove number
+     ↓
+Try another number
+```
+
+Again:
+
+```text
+Choose → Explore → Undo
+```
+
+---
+
+## 15. Common Backtracking Problems
+
+Important problems include:
+
+```text
+Subsets
+Subsequences
+Permutations
+Combinations
+Combination Sum
+N-Queens
+Sudoku
+Maze
+Word Search
+```
+
+All of them involve exploring possible choices.
+
+---
+
+## 16. Backtracking Pattern Summary
+
+### Subsets
+
+```text
+Include / Exclude
+```
+
+### Permutations
+
+```text
+Choose an unused element
+```
+
+### Combinations
+
+```text
+Choose elements from a forward position
+```
+
+### Combination Sum
+
+```text
+Choose elements
++
+Control the target sum
+```
+
+### N-Queens
+
+```text
+Choose a board position
++
+Check safety
+```
+
+### Sudoku
+
+```text
+Choose a number
++
+Check validity
+```
+
+---
+
+## 17. Complexity
+
+Backtracking problems can have exponential or factorial complexity depending on the number of possible choices.
+
+Examples:
+
+| Problem         |        Approximate possibilities |
+| --------------- | -------------------------------: |
+| Subsets         |                            `2^N` |
+| Permutations    |                             `N!` |
+| Combinations    |                         `C(N,K)` |
+| Combination Sum | Depends on target and candidates |
+| N-Queens        |               Exponential in `N` |
+
+Pruning can reduce the amount of work in practice.
+
+---
+
