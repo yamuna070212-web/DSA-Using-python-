@@ -1,0 +1,504 @@
+# Linked List Basics
+
+## 1. What is a Linked List?
+
+A **Linked List** is a linear data structure where elements are stored in separate objects called **nodes**.
+
+Each node contains:
+
+1. **Data** — the value stored in the node
+2. **Next** — a reference to the next node
+
+Example:
+
+```text
+[10 | •] → [20 | •] → [30 | •] → None
+```
+
+Here:
+
+* `10`, `20`, `30` are data.
+* The arrows represent links.
+* `None` means there is no next node.
+
+---
+
+## 2. Why Do We Need Linked Lists?
+
+Python lists store elements in a continuous sequence-like structure and provide fast indexing.
+
+A linked list works differently.
+
+Each node can point to another node:
+
+```text
+Node 1 → Node 2 → Node 3
+```
+
+This makes inserting or removing nodes at known positions easier because we can change links instead of shifting many elements.
+
+---
+
+## 3. Structure of a Node
+
+A node can be represented as:
+
+```text
++---------+---------+
+|  Data   |  Next   |
++---------+---------+
+```
+
+For example:
+
+```text
++-----+------+
+| 10  |  ●---|----→
++-----+------+
+```
+
+---
+
+## 4. Creating a Node in Python
+
+We can create a node using a class.
+
+```python
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+```
+
+Create a node:
+
+```python
+node1 = Node(10)
+
+print(node1.data)
+print(node1.next)
+```
+
+Output:
+
+```text
+10
+None
+```
+
+---
+
+## 5. Creating Multiple Nodes
+
+```python
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+
+node1 = Node(10)
+node2 = Node(20)
+node3 = Node(30)
+```
+
+Now connect them:
+
+```python
+node1.next = node2
+node2.next = node3
+```
+
+The structure becomes:
+
+```text
+node1        node2        node3
+ ↓             ↓            ↓
+[10]  ───→   [20]  ───→   [30]  ───→ None
+```
+
+---
+
+## 6. Traversing a Linked List
+
+**Traversal** means visiting each node one by one.
+
+We start from the first node and follow `next`.
+
+```python
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+
+node1 = Node(10)
+node2 = Node(20)
+node3 = Node(30)
+
+node1.next = node2
+node2.next = node3
+
+current = node1
+
+while current is not None:
+    print(current.data)
+    current = current.next
+```
+
+Output:
+
+```text
+10
+20
+30
+```
+
+---
+
+## 7. Understanding `current`
+
+Initially:
+
+```python
+current = node1
+```
+
+So:
+
+```text
+current
+  ↓
+[10] → [20] → [30] → None
+```
+
+After:
+
+```python
+current = current.next
+```
+
+`current` moves to the next node:
+
+```text
+[10] → current → [20] → [30] → None
+```
+
+Then:
+
+```text
+[10] → [20] → current → [30] → None
+```
+
+Finally:
+
+```text
+[10] → [20] → [30] → None
+                         ↑
+                      current
+```
+
+Then the loop stops.
+
+---
+
+## 8. Head of a Linked List
+
+The first node is called the **head**.
+
+Example:
+
+```text
+head
+ ↓
+[10] → [20] → [30] → None
+```
+
+The head is important because it gives us access to the entire linked list.
+
+If we lose the head reference, we may no longer be able to reach the nodes.
+
+---
+
+## 9. Creating a Linked List Class
+
+Instead of manually connecting nodes, we can create a class for the linked list.
+
+```python
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+
+class LinkedList:
+    def __init__(self):
+        self.head = None
+```
+
+Initially:
+
+```text
+head → None
+```
+
+---
+
+## 10. Insert at the Beginning
+
+Suppose the list is:
+
+```text
+10 → 20 → 30 → None
+```
+
+We want to insert `5` at the beginning.
+
+Result:
+
+```text
+5 → 10 → 20 → 30 → None
+```
+
+### Code
+
+```python
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+
+class LinkedList:
+    def __init__(self):
+        self.head = None
+
+    def insert_beginning(self, data):
+        new_node = Node(data)
+
+        new_node.next = self.head
+        self.head = new_node
+```
+
+---
+
+## 11. Understanding Insertion at Beginning
+
+Suppose:
+
+```text
+head
+ ↓
+[10] → [20] → None
+```
+
+Create:
+
+```text
+[5]
+```
+
+Connect it:
+
+```text
+[5] → [10] → [20] → None
+```
+
+Then update:
+
+```text
+head
+ ↓
+[5] → [10] → [20] → None
+```
+
+The important two lines are:
+
+```python
+new_node.next = self.head
+self.head = new_node
+```
+
+---
+
+## 12. Insert at the End
+
+Suppose:
+
+```text
+10 → 20 → None
+```
+
+Insert `30`.
+
+Result:
+
+```text
+10 → 20 → 30 → None
+```
+
+### Code
+
+```python
+def insert_end(self, data):
+    new_node = Node(data)
+
+    if self.head is None:
+        self.head = new_node
+        return
+
+    current = self.head
+
+    while current.next is not None:
+        current = current.next
+
+    current.next = new_node
+```
+
+---
+
+## 13. Complete Basic Linked List
+
+```python
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+
+class LinkedList:
+    def __init__(self):
+        self.head = None
+
+    def insert_beginning(self, data):
+        new_node = Node(data)
+
+        new_node.next = self.head
+        self.head = new_node
+
+    def insert_end(self, data):
+        new_node = Node(data)
+
+        if self.head is None:
+            self.head = new_node
+            return
+
+        current = self.head
+
+        while current.next is not None:
+            current = current.next
+
+        current.next = new_node
+
+    def display(self):
+        current = self.head
+
+        while current is not None:
+            print(current.data, end=" → ")
+            current = current.next
+
+        print("None")
+
+
+ll = LinkedList()
+
+ll.insert_end(10)
+ll.insert_end(20)
+ll.insert_end(30)
+
+ll.insert_beginning(5)
+
+ll.display()
+```
+
+Output:
+
+```text
+5 → 10 → 20 → 30 → None
+```
+
+---
+
+## 14. Linked List vs Python List
+
+| Operation             | Python List | Singly Linked List |
+| --------------------- | ----------: | -----------------: |
+| Access by index       |        O(1) |               O(N) |
+| Search                |        O(N) |               O(N) |
+| Insert at beginning   |        O(N) |               O(1) |
+| Delete from beginning |        O(N) |               O(1) |
+| Insert at known node  |       O(N)* |              O(1)* |
+| Extra link storage    |          No |                Yes |
+
+`*` assumes the relevant position/node is already known.
+
+---
+
+## 15. Types of Linked Lists
+
+There are three important types:
+
+### 1. Singly Linked List
+
+```text
+10 → 20 → 30 → None
+```
+
+Each node points only to the next node.
+
+### 2. Doubly Linked List
+
+```text
+None ← 10 ⇄ 20 ⇄ 30 → None
+```
+
+Each node has:
+
+```text
+previous
+next
+```
+
+### 3. Circular Linked List
+
+The last node points back to the first node.
+
+```text
+10 → 20 → 30
+↑         ↓
+└─────────┘
+```
+
+We will learn these separately.
+
+---
+
+## 16. Important Terminology
+
+| Term      | Meaning                    |
+| --------- | -------------------------- |
+| Node      | Stores data and a link     |
+| Data      | Value stored in a node     |
+| Next      | Reference to the next node |
+| Head      | First node                 |
+| Tail      | Last node                  |
+| Traversal | Visiting nodes one by one  |
+| `None`    | No next node               |
+
+---
+
+## 17. Complexity
+
+For a basic singly linked list:
+
+| Operation                  | Time |
+| -------------------------- | ---: |
+| Access by index            | O(N) |
+| Search                     | O(N) |
+| Traverse                   | O(N) |
+| Insert at beginning        | O(1) |
+| Insert at end without tail | O(N) |
+
+If a linked list maintains a `tail` reference, inserting at the end can be **O(1)**.
+
+---
