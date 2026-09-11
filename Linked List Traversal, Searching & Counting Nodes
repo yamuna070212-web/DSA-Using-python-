@@ -1,0 +1,370 @@
+# Linked List Traversal, Searching & Counting Nodes
+
+## 1. What is Traversal?
+
+**Traversal** means visiting every node in the linked list one by one.
+
+Example:
+
+```text
+10 → 20 → 30 → 40 → None
+```
+
+Traversal prints:
+
+```text
+10
+20
+30
+40
+```
+
+---
+
+## 2. Traversing a Linked List
+
+```python
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+
+head = Node(10)
+
+head.next = Node(20)
+head.next.next = Node(30)
+head.next.next.next = Node(40)
+
+current = head
+
+while current is not None:
+    print(current.data)
+    current = current.next
+```
+
+### Output
+
+```text
+10
+20
+30
+40
+```
+
+### How it works
+
+```text
+current = head
+```
+
+Start from the first node.
+
+Then:
+
+```python
+current = current.next
+```
+
+Move to the next node.
+
+The loop stops when:
+
+```python
+current is None
+```
+
+---
+
+# 3. Traversal Using a LinkedList Class
+
+```python
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+
+class LinkedList:
+    def __init__(self):
+        self.head = None
+
+    def display(self):
+        current = self.head
+
+        while current is not None:
+            print(current.data, end=" ")
+            current = current.next
+
+
+ll = LinkedList()
+
+ll.head = Node(10)
+ll.head.next = Node(20)
+ll.head.next.next = Node(30)
+
+ll.display()
+```
+
+### Output
+
+```text
+10 20 30
+```
+
+---
+
+# 4. Searching in a Linked List
+
+Searching means checking whether a particular value exists.
+
+Example:
+
+```text
+10 → 20 → 30 → 40
+```
+
+Search for `30`.
+
+Result:
+
+```text
+30 found
+```
+
+### Code
+
+```python
+def search(self, value):
+    current = self.head
+
+    while current is not None:
+        if current.data == value:
+            return True
+
+        current = current.next
+
+    return False
+```
+
+Complete example:
+
+```python
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+
+class LinkedList:
+    def __init__(self):
+        self.head = None
+
+    def search(self, value):
+        current = self.head
+
+        while current is not None:
+            if current.data == value:
+                return True
+
+            current = current.next
+
+        return False
+
+
+ll = LinkedList()
+
+ll.head = Node(10)
+ll.head.next = Node(20)
+ll.head.next.next = Node(30)
+
+print(ll.search(20))
+print(ll.search(50))
+```
+
+### Output
+
+```text
+True
+False
+```
+
+---
+
+# 5. Searching and Returning the Position
+
+We can also return the position of the element.
+
+```python
+def search(self, value):
+    current = self.head
+    position = 0
+
+    while current is not None:
+        if current.data == value:
+            return position
+
+        current = current.next
+        position += 1
+
+    return -1
+```
+
+Example:
+
+```text
+10 → 20 → 30 → 40
+```
+
+Positions:
+
+```text
+10 → 0
+20 → 1
+30 → 2
+40 → 3
+```
+
+So:
+
+```python
+search(30)
+```
+
+returns:
+
+```text
+2
+```
+
+If the element doesn't exist:
+
+```text
+-1
+```
+
+---
+
+# 6. Counting Nodes
+
+To count nodes, start with `count = 0`.
+
+Every time we visit a node:
+
+```python
+count += 1
+```
+
+### Code
+
+```python
+def count_nodes(self):
+    count = 0
+    current = self.head
+
+    while current is not None:
+        count += 1
+        current = current.next
+
+    return count
+```
+
+Example:
+
+```text
+10 → 20 → 30 → 40 → None
+```
+
+Number of nodes:
+
+```text
+4
+```
+
+---
+
+# 7. Complete Example
+
+```python
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+
+class LinkedList:
+    def __init__(self):
+        self.head = None
+
+    def display(self):
+        current = self.head
+
+        while current is not None:
+            print(current.data, end=" ")
+            current = current.next
+
+        print()
+
+    def search(self, value):
+        current = self.head
+
+        while current is not None:
+            if current.data == value:
+                return True
+
+            current = current.next
+
+        return False
+
+    def count_nodes(self):
+        count = 0
+        current = self.head
+
+        while current is not None:
+            count += 1
+            current = current.next
+
+        return count
+
+
+ll = LinkedList()
+
+ll.head = Node(10)
+ll.head.next = Node(20)
+ll.head.next.next = Node(30)
+ll.head.next.next.next = Node(40)
+
+ll.display()
+
+print("20 found:", ll.search(20))
+print("50 found:", ll.search(50))
+
+print("Number of nodes:", ll.count_nodes())
+```
+
+### Output
+
+```text
+10 20 30 40
+20 found: True
+50 found: False
+Number of nodes: 4
+```
+
+---
+
+# 8. Time Complexity
+
+| Operation                    | Time Complexity |
+| ---------------------------- | --------------- |
+| Traversal                    | O(N)            |
+| Searching                    | O(N)            |
+| Counting nodes               | O(N)            |
+| Accessing a node by position | O(N)            |
+
+Why?
+
+Because in the worst case, we may need to visit **all N nodes**.
+
+---
+
