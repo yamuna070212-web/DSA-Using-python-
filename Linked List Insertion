@@ -1,0 +1,334 @@
+Linked List Insertion
+
+Insertion means adding a new node to a linked list.
+
+We will learn 3 important operations:
+
+Insert at the Beginning
+Insert at the End
+Insert at a Specific Position
+
+A singly linked list looks like:
+
+10 → 20 → 30 → None
+1. Insert at the Beginning
+
+Suppose we want to insert 5.
+
+Before:
+
+10 → 20 → 30 → None
+
+After:
+
+5 → 10 → 20 → 30 → None
+
+The important thing is to connect the new node to the old head, then make the new node the head.
+
+head
+null
+null
+A
+next
+B
+next
+X
+next
+C
+next
+Outside the list
+X → null
+Step 1 of 4
+Insert X after B: Initialize X.
+Insert
+Delete
+Insert
+Delete
+Step
+Step
+Give feedback
+Code
+def insert_beginning(self, data):
+    new_node = Node(data)
+
+    new_node.next = self.head
+    self.head = new_node
+Understand it
+
+Suppose:
+
+head
+ ↓
+10 → 20 → 30
+
+Create:
+
+new_node = Node(5)
+
+Then:
+
+new_node.next = self.head
+
+Now:
+
+5 → 10 → 20 → 30
+    ↑
+   head
+
+Finally:
+
+self.head = new_node
+
+Now:
+
+head
+ ↓
+5 → 10 → 20 → 30
+⏱ Complexity
+
+O(1) — because we don't need to travel through the list.
+
+2. Insert at the End
+
+Suppose:
+
+10 → 20 → 30 → None
+
+We want to insert 40.
+
+Result:
+
+10 → 20 → 30 → 40 → None
+Code
+def insert_end(self, data):
+    new_node = Node(data)
+
+    if self.head is None:
+        self.head = new_node
+        return
+
+    current = self.head
+
+    while current.next is not None:
+        current = current.next
+
+    current.next = new_node
+Step-by-step
+
+Start:
+
+10 → 20 → 30 → None
+↑
+current
+
+Move:
+
+10 → 20 → 30 → None
+     ↑
+   current
+
+Move again:
+
+10 → 20 → 30 → None
+          ↑
+        current
+
+Now current.next is None.
+
+So:
+
+current.next = new_node
+
+Result:
+
+10 → 20 → 30 → 40 → None
+⏱ Complexity
+
+O(N) without a tail pointer, because we have to travel to the last node.
+
+3. Insert at a Specific Position
+
+Now suppose:
+
+10 → 20 → 40 → None
+
+We want to insert 30 at position 2.
+
+Result:
+
+10 → 20 → 30 → 40 → None
+
+Let's use 0-based indexing:
+
+10 → 20 → 40
+0    1    2
+
+To insert at position 2, we need to reach the node at position 1.
+
+That node is 20.
+
+Then:
+
+20 → 40
+
+becomes:
+
+20 → 30 → 40
+Code
+def insert_at_position(self, data, position):
+    new_node = Node(data)
+
+    if position == 0:
+        new_node.next = self.head
+        self.head = new_node
+        return
+
+    current = self.head
+
+    for _ in range(position - 1):
+        if current is None:
+            return
+        current = current.next
+
+    if current is None:
+        return
+
+    new_node.next = current.next
+    current.next = new_node
+⭐ Most Important Part
+
+These two lines are the heart of insertion in the middle:
+
+new_node.next = current.next
+current.next = new_node
+
+Suppose:
+
+current
+   ↓
+  20 → 40
+
+Create 30.
+
+First:
+
+new_node.next = current.next
+
+Now:
+
+30 → 40
+
+Then:
+
+current.next = new_node
+
+Final:
+
+20 → 30 → 40
+
+Order matters! If you change the pointers incorrectly, you can lose part of the list.
+
+🧑‍💻 Complete Program
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+
+class LinkedList:
+    def __init__(self):
+        self.head = None
+
+    def insert_beginning(self, data):
+        new_node = Node(data)
+
+        new_node.next = self.head
+        self.head = new_node
+
+    def insert_end(self, data):
+        new_node = Node(data)
+
+        if self.head is None:
+            self.head = new_node
+            return
+
+        current = self.head
+
+        while current.next is not None:
+            current = current.next
+
+        current.next = new_node
+
+    def insert_at_position(self, data, position):
+        new_node = Node(data)
+
+        if position == 0:
+            new_node.next = self.head
+            self.head = new_node
+            return
+
+        current = self.head
+
+        for _ in range(position - 1):
+            if current is None:
+                return
+
+            current = current.next
+
+        if current is None:
+            return
+
+        new_node.next = current.next
+        current.next = new_node
+
+    def display(self):
+        current = self.head
+
+        while current is not None:
+            print(current.data, end=" → ")
+            current = current.next
+
+        print("None")
+
+
+ll = LinkedList()
+
+ll.insert_end(10)
+ll.insert_end(20)
+ll.insert_end(40)
+
+print("Original list:")
+ll.display()
+
+ll.insert_beginning(5)
+
+print("After inserting at beginning:")
+ll.display()
+
+ll.insert_at_position(30, 3)
+
+print("After inserting at position 3:")
+ll.display()
+
+ll.insert_end(50)
+
+print("After inserting at end:")
+ll.display()
+Output
+Original list:
+10 → 20 → 40 → None
+
+After inserting at beginning:
+5 → 10 → 20 → 40 → None
+
+After inserting at position 3:
+5 → 10 → 20 → 30 → 40 → None
+
+After inserting at end:
+5 → 10 → 20 → 30 → 40 → 50 → None
+📊 Complexity
+Insertion	Time
+Beginning	O(1)
+End	O(N)
+Specific position	O(N)
+Extra space for new node
