@@ -1,0 +1,272 @@
+Reverse a Linked List
+
+Now we’ll learn one of the most important linked-list operations: reversing a linked list.
+
+Suppose the original list is:
+
+10 → 20 → 30 → 40 → None
+
+After reversing:
+
+40 → 30 → 20 → 10 → None
+
+There are two common approaches:
+
+Iterative method ⭐
+Recursive method
+1. Reverse Using the Iterative Method
+
+The main idea is to change the direction of every next pointer.
+
+head
+null
+null
+A
+next
+B
+next
+X
+next
+C
+next
+Outside the list
+X → null
+Step 1 of 4
+Insert X after B: Initialize X.
+Insert
+Delete
+Insert
+Delete
+Step
+Step
+Give feedback
+
+We use three pointers:
+
+previous
+current
+next_node
+
+Initially:
+
+previous = None
+current = self.head
+Step-by-step
+
+Original:
+
+10 → 20 → 30 → 40 → None
+
+Initially:
+
+previous = None
+current = 10
+Step 1: Save the next node
+next_node = current.next
+
+Now:
+
+current = 10
+next_node = 20
+Step 2: Reverse the pointer
+current.next = previous
+
+So:
+
+10 → None
+Step 3: Move previous
+previous = current
+Step 4: Move current
+current = next_node
+
+Now we repeat the same process.
+
+Eventually:
+
+40 → 30 → 20 → 10 → None
+2. Iterative Code
+def reverse(self):
+    previous = None
+    current = self.head
+
+    while current is not None:
+        next_node = current.next
+        current.next = previous
+        previous = current
+        current = next_node
+
+    self.head = previous
+⭐ Remember this pattern
+next_node = current.next
+current.next = previous
+previous = current
+current = next_node
+
+This is the most important part of iterative linked-list reversal.
+
+3. Complete Example
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+
+class LinkedList:
+    def __init__(self):
+        self.head = None
+
+    def insert_end(self, data):
+        new_node = Node(data)
+
+        if self.head is None:
+            self.head = new_node
+            return
+
+        current = self.head
+
+        while current.next is not None:
+            current = current.next
+
+        current.next = new_node
+
+    def reverse(self):
+        previous = None
+        current = self.head
+
+        while current is not None:
+            next_node = current.next
+            current.next = previous
+            previous = current
+            current = next_node
+
+        self.head = previous
+
+    def display(self):
+        current = self.head
+
+        while current is not None:
+            print(current.data, end=" → ")
+            current = current.next
+
+        print("None")
+
+
+ll = LinkedList()
+
+ll.insert_end(10)
+ll.insert_end(20)
+ll.insert_end(30)
+ll.insert_end(40)
+
+print("Original:")
+ll.display()
+
+ll.reverse()
+
+print("Reversed:")
+ll.display()
+Output
+Original:
+10 → 20 → 30 → 40 → None
+
+Reversed:
+40 → 30 → 20 → 10 → None
+4. Why Do We Need next_node?
+
+This is extremely important.
+
+Suppose:
+
+10 → 20 → 30 → 40
+
+If we directly do:
+
+current.next = previous
+
+we change:
+
+10 → None
+
+We could lose our connection to 20.
+
+That's why we first save:
+
+next_node = current.next
+
+So we still know where to continue.
+
+Correct order:
+next_node = current.next
+current.next = previous
+previous = current
+current = next_node
+5. Reverse Using Recursion
+
+The recursive approach works differently.
+
+For:
+
+10 → 20 → 30 → None
+
+we recursively go to the last node:
+
+10 → 20 → 30
+          ↑
+         last
+
+Then reverse the links while returning from recursion.
+
+Code
+def reverse_recursive(self, current):
+    if current is None or current.next is None:
+        return current
+
+    new_head = self.reverse_recursive(current.next)
+
+    current.next.next = current
+    current.next = None
+
+    return new_head
+
+Call it like:
+
+self.head = self.reverse_recursive(self.head)
+6. Understanding the Recursive Code
+
+Suppose:
+
+10 → 20 → 30 → None
+
+The recursion reaches:
+
+30
+
+Then while returning:
+
+current.next.next = current
+
+For 20:
+
+30 → 20
+
+For 10:
+
+30 → 20 → 10
+
+Then:
+
+current.next = None
+
+makes the final end:
+
+10 → None
+
+Final:
+
+30 → 20 → 10 → None
+📊 Iterative vs Recursive
+Method	Time	Extra Space
+Iterative	O(N)	O(1)
+Recursive	O(N)	O(N)
+
+The iterative method is usually preferred because it uses constant extra space.
