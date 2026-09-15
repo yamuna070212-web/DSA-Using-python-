@@ -1,0 +1,286 @@
+Find the Middle of a Linked List
+Slow and Fast Pointer Technique
+
+This is a very important linked-list technique.
+
+Suppose we have:
+
+10 → 20 → 30 → 40 → 50 → None
+
+The middle node is:
+
+30
+
+Instead of counting the nodes first, we can find the middle using two pointers:
+
+🐢 slow → moves 1 step
+🐇 fast → moves 2 steps
+head
+null
+null
+A
+next
+B
+next
+X
+next
+C
+next
+Outside the list
+X → null
+Step 1 of 4
+Insert X after B: Initialize X.
+Insert
+Delete
+Insert
+Delete
+Step
+Step
+Give feedback
+
+The visualization above is useful for seeing how linked-list pointers move. For the middle-finding algorithm, focus on the rule: slow moves 1 step, fast moves 2 steps.
+
+1. The Basic Idea
+
+Consider:
+
+10 → 20 → 30 → 40 → 50 → None
+
+Initially:
+
+slow = head
+fast = head
+
+So both start at 10.
+
+slow
+ ↓
+10 → 20 → 30 → 40 → 50
+ ↑
+fast
+Move 1
+
+slow moves 1 step:
+
+10 → 20 → 30 → 40 → 50
+     ↑
+    slow
+
+fast moves 2 steps:
+
+10 → 20 → 30 → 40 → 50
+          ↑
+         fast
+Move 2
+
+slow moves 1 step:
+
+10 → 20 → 30 → 40 → 50
+          ↑
+         slow
+
+fast moves 2 steps:
+
+10 → 20 → 30 → 40 → 50
+                    ↑
+                   fast
+
+Now fast reaches the end.
+
+Therefore:
+
+slow = 30
+
+So 30 is the middle node.
+
+2. Python Code
+def find_middle(self):
+    slow = self.head
+    fast = self.head
+
+    while fast is not None and fast.next is not None:
+        slow = slow.next
+        fast = fast.next.next
+
+    return slow
+
+The most important part is:
+
+slow = slow.next
+fast = fast.next.next
+
+So:
+
+slow → 1 step
+fast → 2 steps
+3. Complete Example
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+
+class LinkedList:
+    def __init__(self):
+        self.head = None
+
+    def insert_end(self, data):
+        new_node = Node(data)
+
+        if self.head is None:
+            self.head = new_node
+            return
+
+        current = self.head
+
+        while current.next is not None:
+            current = current.next
+
+        current.next = new_node
+
+    def find_middle(self):
+        slow = self.head
+        fast = self.head
+
+        while fast is not None and fast.next is not None:
+            slow = slow.next
+            fast = fast.next.next
+
+        return slow
+
+
+ll = LinkedList()
+
+ll.insert_end(10)
+ll.insert_end(20)
+ll.insert_end(30)
+ll.insert_end(40)
+ll.insert_end(50)
+
+middle = ll.find_middle()
+
+print("Middle:", middle.data)
+Output
+Middle: 30
+4. Why Does This Work?
+
+This is the clever part.
+
+fast is moving twice as quickly as slow.
+
+When fast has travelled to the end:
+
+fast → approximately N steps
+slow → approximately N/2 steps
+
+Therefore, slow is at the middle.
+
+Simple way to remember:
+🐢 Slow = 1 step
+🐇 Fast = 2 steps
+
+Fast reaches the end
+        ↓
+Slow reaches the middle
+5. What About an Even Number of Nodes?
+
+Suppose:
+
+10 → 20 → 30 → 40 → None
+
+There are two middle nodes:
+
+10 → 20 → 30 → 40
+     ↑     ↑
+   middle  middle
+
+With the above code:
+
+while fast is not None and fast.next is not None:
+
+slow will return:
+
+30
+
+So this implementation returns the second middle.
+
+6. Dry Run — Even Number of Nodes
+
+List:
+
+10 → 20 → 30 → 40 → None
+
+Initially:
+
+slow = 10
+fast = 10
+First iteration
+slow = 20
+fast = 30
+Second iteration
+slow = 30
+fast = None
+
+Loop stops.
+
+Therefore:
+
+Middle = 30
+7. Empty Linked List
+
+What if:
+
+head = None
+
+Then:
+
+slow = self.head
+fast = self.head
+
+Both are None.
+
+The loop doesn't execute.
+
+So:
+
+return slow
+
+returns:
+
+None
+
+You can safely handle it like:
+
+middle = ll.find_middle()
+
+if middle is not None:
+    print("Middle:", middle.data)
+else:
+    print("List is empty")
+8. Single Node
+
+Example:
+
+50 → None
+
+Initially:
+
+slow = 50
+fast = 50
+
+The loop doesn't execute because:
+
+fast.next is None
+
+So:
+
+slow = 50
+
+Correct! 🎯
+
+9. Complexity
+Operation	Complexity
+Time	O(N)
+Extra Space	O(1)
+
+We visit the list only once and use only two pointers.
