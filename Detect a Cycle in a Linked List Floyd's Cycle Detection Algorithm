@@ -1,0 +1,88 @@
+Detect a Cycle in a Linked List
+Floyd's Cycle Detection Algorithm
+
+Now we’ll learn another important Slow and Fast Pointer problem.
+
+A cycle means that instead of the linked list ending at None, a node points back to an earlier node.
+
+Normal linked list
+10 → 20 → 30 → 40 → None
+Linked list with a cycle
+10 → 20 → 30 → 40
+          ↑         ↓
+          ← ← ← ← ←
+
+Here, 40 points back to 20.
+
+So the list keeps going:
+
+20 → 30 → 40 → 20 → 30 → 40 → ...
+
+It never reaches None.
+
+🐢🐇 Floyd's Cycle Detection
+
+We use two pointers:
+
+slow moves 1 step
+fast moves 2 steps
+
+If there is a cycle, eventually slow and fast will meet.
+
+If there is no cycle, fast will reach None.
+
+The basic pattern
+slow = self.head
+fast = self.head
+
+while fast is not None and fast.next is not None:
+    slow = slow.next
+    fast = fast.next.next
+
+    if slow == fast:
+        return True
+
+return False
+1. Why Does It Work?
+
+Consider:
+
+10 → 20 → 30 → 40
+     ↑         ↓
+     ← ← ← ← ←
+
+The cycle is:
+
+20 → 30 → 40 → 20 → ...
+
+Once both pointers enter the cycle:
+
+slow → 1 step
+fast → 2 steps
+
+fast keeps gaining on slow.
+
+Eventually:
+
+slow
+ ↓
+30
+
+fast
+ ↓
+30
+
+They meet.
+
+Therefore, a cycle exists.
+
+2. Complete Code
+Detect a Cycle in a Linked List — Floyd's Algorithm
+
+Floyd's algorithm solves this by detecting whether two pointers meet.
+
+6. Complexity
+Method	Time	Extra Space
+Floyd's Algorithm	O(N)	O(1)
+
+This is efficient because we only use two pointers.
