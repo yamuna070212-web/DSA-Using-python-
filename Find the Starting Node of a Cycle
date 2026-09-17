@@ -1,0 +1,308 @@
+Find the Starting Node of a Cycle
+
+Now we’ll go one step further than cycle detection.
+
+Previously, we learned how to answer:
+
+“Does a cycle exist?”
+
+Now we want to answer:
+
+“Where does the cycle start?”
+
+1. Example
+
+Consider:
+
+10 → 20 → 30 → 40 → 50
+          ↑         ↓
+          ← ← ← ← ←
+
+Here:
+
+10 → 20 → 30 → 40 → 50
+          ↑
+       cycle starts
+
+The starting node of the cycle is 30.
+
+2. The Main Idea
+
+We still use:
+
+🐢 slow → moves 1 step
+🐇 fast → moves 2 steps
+
+First, let them meet inside the cycle.
+
+Then:
+
+Keep slow at the meeting point.
+Move another pointer entry to head.
+Move both slow and entry one step at a time.
+Where they meet is the starting node of the cycle.
+Visual idea
+Head
+ ↓
+10 → 20 → 30 → 40 → 50
+          ↑         ↓
+          ← ← ← ← ←
+          ↑
+      cycle start
+3. Step 1 — Detect the Meeting Point
+slow = self.head
+fast = self.head
+
+while fast is not None and fast.next is not None:
+    slow = slow.next
+    fast = fast.next.next
+
+    if slow == fast:
+        break
+
+If fast reaches None, there is no cycle.
+
+4. Step 2 — Find the Cycle Starting Node
+
+After slow and fast meet:
+
+entry = self.head
+
+Then:
+
+while entry != slow:
+    entry = entry.next
+    slow = slow.next
+
+When they meet:
+
+entry == slow
+
+That node is the cycle's starting node.
+
+5. Complete Code
+
+Find the Starting Node of a Cycle
+
+We can use Floyd's Tortoise and Hare algorithm to find where a cycle begins.
+
+Algorithm
+Step 1
+
+Use two pointers:
+
+slow → 1 step
+fast → 2 steps
+
+If they meet, a cycle exists.
+
+Step 2
+
+Create another pointer:
+
+entry = self.head
+Step 3
+
+Move both entry and slow one step at a time:
+
+entry = entry.next
+slow = slow.next
+
+When they meet, that node is the beginning of the cycle.
+
+Code
+def cycle_start(self):
+    slow = self.head
+    fast = self.head
+
+    # Step 1: Find meeting point
+    while fast is not None and fast.next is not None:
+        slow = slow.next
+        fast = fast.next.next
+
+        if slow == fast:
+            break
+
+    # No cycle
+    if fast is None or fast.next is None:
+        return None
+
+    # Step 2: Find cycle starting point
+    entry = self.head
+
+    while entry != slow:
+        entry = entry.next
+        slow = slow.next
+
+    return entry
+Complete Example
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+
+class LinkedList:
+    def __init__(self):
+        self.head = None
+
+    def cycle_start(self):
+        slow = self.head
+        fast = self.head
+
+        # Find meeting point
+        while fast is not None and fast.next is not None:
+            slow = slow.next
+            fast = fast.next.next
+
+            if slow == fast:
+                break
+
+        # No cycle
+        if fast is None or fast.next is None:
+            return None
+
+        # Find starting node
+        entry = self.head
+
+        while entry != slow:
+            entry = entry.next
+            slow = slow.next
+
+        return entry
+
+
+ll = LinkedList()
+
+node1 = Node(10)
+node2 = Node(20)
+node3 = Node(30)
+node4 = Node(40)
+node5 = Node(50)
+
+ll.head = node1
+
+node1.next = node2
+node2.next = node3
+node3.next = node4
+node4.next = node5
+
+# Create cycle:
+node5.next = node3
+
+start = ll.cycle_start()
+
+if start is not None:
+    print("Cycle starts at:", start.data)
+else:
+    print("No cycle")
+Output
+Cycle starts at: 30
+6. Understand the Example
+
+Our list is:
+
+10 → 20 → 30 → 40 → 50
+          ↑         ↓
+          ← ← ← ← ←
+
+The cycle is:
+
+30 → 40 → 50 → 30 → ...
+
+So:
+
+Cycle start = 30
+
+The first phase finds a meeting point somewhere inside the cycle.
+
+It might be:
+
+40
+
+or another node depending on the structure.
+
+The meeting point is not necessarily the cycle start.
+
+That's why we need the second phase.
+
+7. Why Do We Move entry and slow Together?
+
+After the first meeting:
+
+entry → head
+slow  → meeting point
+
+Then:
+
+entry = entry.next
+slow = slow.next
+
+Both move at the same speed.
+
+Eventually:
+
+entry
+  ↓
+ 30
+  ↑
+slow
+
+They meet exactly at the cycle's starting node.
+
+8. Very Important Difference
+
+Don't confuse these two:
+
+Cycle Detection
+if slow == fast:
+    return True
+
+This tells us:
+
+A cycle exists.
+
+Cycle Starting Node
+
+After they meet:
+
+entry = self.head
+
+while entry != slow:
+    entry = entry.next
+    slow = slow.next
+
+This tells us:
+
+Where the cycle begins.
+
+9. No Cycle Case
+
+Suppose:
+
+10 → 20 → 30 → 40 → None
+
+Eventually:
+
+fast is None
+
+So:
+
+return None
+
+We can use:
+
+start = ll.cycle_start()
+
+if start:
+    print(start.data)
+else:
+    print("No cycle")
+📊 Complexity
+Operation	Complexity
+Find meeting point	O(N)
+Find cycle start	O(N)
+Total	O(N)
+Extra space	O(1)
+
+We don't use a set or extra list to remember visited nodes.
