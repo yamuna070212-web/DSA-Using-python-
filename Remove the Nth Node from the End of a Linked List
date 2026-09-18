@@ -1,0 +1,150 @@
+Remove the Nth Node from the End of a Linked List
+1. What does "Nth from the end" mean?
+
+Consider:
+
+10 → 20 → 30 → 40 → 50 → None
+
+From the end:
+
+1st → 50
+2nd → 40
+3rd → 30
+4th → 20
+5th → 10
+
+If we remove the 2nd node from the end:
+
+Before:
+10 → 20 → 30 → 40 → 50
+
+After:
+10 → 20 → 30 → 50
+2. Two-Pointer Technique
+
+We use two pointers:
+
+slow
+fast
+
+First, move fast ahead by n positions.
+
+Then move both pointers together.
+
+When fast reaches the last node, slow will be just before the node we need to remove.
+
+3. Why use a Dummy Node?
+
+Create:
+
+dummy → 10 → 20 → 30 → 40 → 50
+
+The dummy node makes it easier to remove the head node when n equals the length of the list.
+
+4. Python Code
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+
+def remove_nth_from_end(head, n):
+
+    dummy = Node(0)
+    dummy.next = head
+
+    slow = dummy
+    fast = dummy
+
+    # Move fast n steps forward
+    for _ in range(n):
+        fast = fast.next
+
+    # Move both pointers
+    while fast.next is not None:
+        slow = slow.next
+        fast = fast.next
+
+    # Remove the node
+    slow.next = slow.next.next
+
+    return dummy.next
+5. Dry Run
+
+List:
+
+10 → 20 → 30 → 40 → 50
+
+n = 2
+
+Initial:
+
+dummy → 10 → 20 → 30 → 40 → 50
+  ↑
+slow, fast
+
+Move fast 2 steps:
+
+dummy → 10 → 20 → 30 → 40 → 50
+  ↑              ↑
+ slow           fast
+
+Now move both together until fast reaches the last node.
+
+Eventually:
+
+dummy → 10 → 20 → 30 → 40 → 50
+                    ↑       ↑
+                   slow    fast
+
+slow is at 30.
+
+We need to remove the node after slow:
+
+slow.next = slow.next.next
+
+So:
+
+30 → 40 → 50
+     ✖
+
+becomes:
+
+30 → 50
+
+Final list:
+
+10 → 20 → 30 → 50
+6. Important Line
+slow.next = slow.next.next
+
+Suppose:
+
+30 → 40 → 50
+↑
+slow
+
+slow.next is 40.
+
+slow.next.next is 50.
+
+Therefore:
+
+slow.next = slow.next.next
+
+changes:
+
+30 → 40 → 50
+
+to:
+
+30 → 50
+7. Complexity
+
+Let N be the number of nodes.
+
+Operation	Complexity
+Time	O(N)
+Extra Space	O(1)
+
+We traverse the linked list only once after the initial pointer movement.
