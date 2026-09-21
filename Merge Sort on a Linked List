@@ -1,0 +1,442 @@
+# Merge Sort on a Linked List
+
+## 1. What is Merge Sort?
+
+Merge Sort is a **divide-and-conquer** sorting algorithm.
+
+For a linked list, we:
+
+```text
+1. Find the middle
+        ↓
+2. Split the list into two halves
+        ↓
+3. Recursively sort both halves
+        ↓
+4. Merge the two sorted halves
+```
+
+---
+
+## 2. Example
+
+Suppose we have:
+
+```text
+4 → 2 → 1 → 3
+```
+
+### Split
+
+```text
+4 → 2       1 → 3
+```
+
+Split again:
+
+```text
+4    2      1    3
+```
+
+Now each part has one node, so they are already sorted.
+
+---
+
+## 3. Merge
+
+Merge:
+
+```text
+4 + 2
+```
+
+Result:
+
+```text
+2 → 4
+```
+
+Merge:
+
+```text
+1 + 3
+```
+
+Result:
+
+```text
+1 → 3
+```
+
+Finally:
+
+```text
+2 → 4
+```
+
+and
+
+```text
+1 → 3
+```
+
+are merged:
+
+```text
+1 → 2 → 3 → 4
+```
+
+---
+
+# 4. Why Merge Sort is Good for Linked Lists
+
+With arrays, Merge Sort requires extra work to split and merge.
+
+With linked lists, we can efficiently split using the **slow and fast pointer technique**.
+
+You already learned this when finding the middle of a linked list.
+
+So we use:
+
+```text
+slow → moves one step
+fast → moves two steps
+```
+
+---
+
+# 5. Step 1 — Find the Middle
+
+```python
+def get_middle(head):
+
+    slow = head
+    fast = head.next
+
+    while fast is not None and fast.next is not None:
+        slow = slow.next
+        fast = fast.next.next
+
+    return slow
+```
+
+### Why `fast = head.next`?
+
+It helps us make the left half end correctly when splitting the list.
+
+Example:
+
+```text
+1 → 2 → 3 → 4
+```
+
+The middle returned here is:
+
+```text
+2
+```
+
+So we can split into:
+
+```text
+1 → 2
+
+3 → 4
+```
+
+---
+
+# 6. Step 2 — Split the List
+
+Suppose:
+
+```text
+1 → 4 → 2 → 3
+```
+
+After finding the middle:
+
+```text
+1 → 4
+      ↓
+      2 → 3
+```
+
+We need to break the connection.
+
+```python
+mid = get_middle(head)
+
+right = mid.next
+
+mid.next = None
+```
+
+Now:
+
+```text
+Left:
+1 → 4
+
+Right:
+2 → 3
+```
+
+---
+
+# 7. Step 3 — Recursively Sort Both Halves
+
+```python
+left = merge_sort(head)
+right = merge_sort(right)
+```
+
+The same process continues until every list contains one node.
+
+---
+
+# 8. Step 4 — Merge the Sorted Lists
+
+We already learned how to merge two sorted linked lists.
+
+```python
+def merge(left, right):
+
+    dummy = Node(0)
+    tail = dummy
+
+    while left is not None and right is not None:
+
+        if left.data <= right.data:
+            tail.next = left
+            left = left.next
+
+        else:
+            tail.next = right
+            right = right.next
+
+        tail = tail.next
+
+    if left is not None:
+        tail.next = left
+
+    else:
+        tail.next = right
+
+    return dummy.next
+```
+
+---
+
+# 9. Complete Merge Sort Code
+
+```python
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+
+def get_middle(head):
+
+    slow = head
+    fast = head.next
+
+    while fast is not None and fast.next is not None:
+        slow = slow.next
+        fast = fast.next.next
+
+    return slow
+
+
+def merge(left, right):
+
+    dummy = Node(0)
+    tail = dummy
+
+    while left is not None and right is not None:
+
+        if left.data <= right.data:
+            tail.next = left
+            left = left.next
+
+        else:
+            tail.next = right
+            right = right.next
+
+        tail = tail.next
+
+    if left is not None:
+        tail.next = left
+
+    else:
+        tail.next = right
+
+    return dummy.next
+
+
+def merge_sort(head):
+
+    # Base case
+    if head is None or head.next is None:
+        return head
+
+    # Find middle
+    mid = get_middle(head)
+
+    # Split the list
+    right = mid.next
+    mid.next = None
+
+    # Sort both halves
+    left = merge_sort(head)
+    right = merge_sort(right)
+
+    # Merge
+    return merge(left, right)
+```
+
+---
+
+# 10. Dry Run
+
+Input:
+
+```text
+4 → 2 → 1 → 3
+```
+
+### First split
+
+```text
+4 → 2
+1 → 3
+```
+
+### Split again
+
+```text
+4
+2
+
+1
+3
+```
+
+Now recursively merge:
+
+```text
+4 + 2
+```
+
+becomes:
+
+```text
+2 → 4
+```
+
+And:
+
+```text
+1 + 3
+```
+
+becomes:
+
+```text
+1 → 3
+```
+
+Final merge:
+
+```text
+2 → 4
+```
+
+with:
+
+```text
+1 → 3
+```
+
+Result:
+
+```text
+1 → 2 → 3 → 4
+```
+
+---
+
+# 11. The Recursion Pattern
+
+Remember this:
+
+```text
+merge_sort()
+      ↓
+   Split
+   /   \
+Left   Right
+ ↓       ↓
+Sort    Sort
+ \       /
+   Merge
+```
+
+This is the main idea behind Merge Sort.
+
+---
+
+# 12. Base Case
+
+This line is extremely important:
+
+```python
+if head is None or head.next is None:
+    return head
+```
+
+Why?
+
+A list containing:
+
+```text
+one node
+```
+
+is already sorted.
+
+Example:
+
+```text
+5
+```
+
+No further splitting is needed.
+
+---
+
+# 13. Complexity
+
+For `N` nodes:
+
+| Complexity  | Value                     |
+| ----------- | ------------------------- |
+| Time        | O(N log N)                |
+| Extra Space | O(log N) due to recursion |
+
+The merging itself uses **O(1) extra node storage** because we reuse existing nodes.
+
+---
+
+# 14. Merge Sort vs Array Sorting
+
+For linked lists, Merge Sort is especially useful because:
+
+* We don't need random access.
+* Finding the middle can be done with slow/fast pointers.
+* Nodes can be rearranged by changing links.
+* The algorithm has predictable `O(N log N)` time.
+
+---
+
